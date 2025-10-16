@@ -21,7 +21,7 @@ import java.util.PriorityQueue;
  */
 public class BasicDataOperationUsingQueue {
     private LocalDateTime dateTimeValueToSearch;
-    private LocalDateTime[] dateTimeArray;
+    private double[] dateTimeArray;
     private Queue<LocalDateTime> dateTimeQueue;
 
     /**
@@ -30,7 +30,7 @@ public class BasicDataOperationUsingQueue {
      * @param dateTimeValueToSearch Значення для пошуку
      * @param dateTimeArray Масив LocalDateTime
      */
-    BasicDataOperationUsingQueue(LocalDateTime dateTimeValueToSearch, LocalDateTime[] dateTimeArray) {
+    BasicDataOperationUsingQueue(LocalDateTime dateTimeValueToSearch, double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
         this.dateTimeArray = dateTimeArray;
         this.dateTimeQueue = new PriorityQueue<>(Arrays.asList(dateTimeArray));
@@ -107,10 +107,10 @@ public class BasicDataOperationUsingQueue {
         LocalDateTime maxValue = dateTimeArray[0];
 
         for (LocalDateTime currentDateTime : dateTimeArray) {
-            if (currentDateTime.isBefore(minValue)) {
+            if (doubleValue < min) {
                 minValue = currentDateTime;
             }
-            if (currentDateTime.isAfter(maxValue)) {
+            if (doubleValue > max) {
                 maxValue = currentDateTime;
             }
         }

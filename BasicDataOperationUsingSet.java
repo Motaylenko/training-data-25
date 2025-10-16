@@ -1,11 +1,11 @@
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Клас BasicDataOperationUsingSet реалізує операції з множиною HashSet для LocalDateTime.
+ * Клас BasicDataOperationUsingSet реалізує операції з множиною LinkedHashSet для LocalDateTime.
  * 
  * <p>Методи класу:</p>
  * <ul>
@@ -20,8 +20,8 @@ import java.util.Set;
  */
 public class BasicDataOperationUsingSet {
     LocalDateTime dateTimeValueToSearch;
-    LocalDateTime[] dateTimeArray;
-    Set<LocalDateTime> dateTimeSet = new HashSet<>();
+    double[] dateTimeArray;
+    Set<LocalDateTime> dateTimeSet = new LinkedHashSet<>();
 
     /**
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
@@ -29,14 +29,14 @@ public class BasicDataOperationUsingSet {
      * @param dateTimeValueToSearch Значення для пошуку
      * @param dateTimeArray Масив LocalDateTime
      */
-    BasicDataOperationUsingSet(LocalDateTime dateTimeValueToSearch, LocalDateTime[] dateTimeArray) {
+    BasicDataOperationUsingSet(LocalDateTime dateTimeValueToSearch, double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
         this.dateTimeArray = dateTimeArray;
-        this.dateTimeSet = new HashSet<>(Arrays.asList(dateTimeArray));
+        this.dateTimeSet = new LinkedHashSet<>(Arrays.asList(dateTimeArray));
     }
     
     /**
-     * Запускає комплексний аналіз даних з використанням множини HashSet.
+     * Запускає комплексний аналіз даних з використанням множини LinkedHashSet.
      * 
      * Метод завантажує дані, виконує операції з множиною та масивом LocalDateTime.
      */
@@ -103,10 +103,10 @@ public class BasicDataOperationUsingSet {
         LocalDateTime maxValue = dateTimeArray[0];
 
         for (LocalDateTime currentDateTime : dateTimeArray) {
-            if (currentDateTime.isBefore(minValue)) {
+            if (doubleValue < min) {
                 minValue = currentDateTime;
             }
-            if (currentDateTime.isAfter(maxValue)) {
+            if (doubleValue > max) {
                 maxValue = currentDateTime;
             }
         }
@@ -125,12 +125,12 @@ public class BasicDataOperationUsingSet {
 
         boolean elementExists = this.dateTimeSet.contains(dateTimeValueToSearch);
 
-        PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в HashSet дати i часу");
+        PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в LinkedHashSet дати i часу");
 
         if (elementExists) {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' знайдено в HashSet");
+            System.out.println("Елемент '" + dateTimeValueToSearch + "' знайдено в LinkedHashSet");
         } else {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' відсутній в HashSet.");
+            System.out.println("Елемент '" + dateTimeValueToSearch + "' відсутній в LinkedHashSet.");
         }
     }
 
@@ -139,7 +139,7 @@ public class BasicDataOperationUsingSet {
      */
     private void locateMinMaxInSet() {
         if (dateTimeSet == null || dateTimeSet.isEmpty()) {
-            System.out.println("HashSet є пустим або не ініціалізованим.");
+            System.out.println("LinkedHashSet є пустим або не ініціалізованим.");
             return;
         }
 
@@ -148,10 +148,10 @@ public class BasicDataOperationUsingSet {
         LocalDateTime minValue = Collections.min(dateTimeSet);
         LocalDateTime maxValue = Collections.max(dateTimeSet);
 
-        PerformanceTracker.displayOperationTime(timeStart, "визначення мiнiмальної i максимальної дати в HashSet");
+        PerformanceTracker.displayOperationTime(timeStart, "визначення мiнiмальної i максимальної дати в LinkedHashSet");
 
-        System.out.println("Найменше значення в HashSet: " + minValue);
-        System.out.println("Найбільше значення в HashSet: " + maxValue);
+        System.out.println("Найменше значення в LinkedHashSet: " + minValue);
+        System.out.println("Найбільше значення в LinkedHashSet: " + maxValue);
     }
 
     /**
@@ -159,7 +159,7 @@ public class BasicDataOperationUsingSet {
      */
     private void analyzeArrayAndSet() {
         System.out.println("Кiлькiсть елементiв в масивi: " + dateTimeArray.length);
-        System.out.println("Кiлькiсть елементiв в HashSet: " + dateTimeSet.size());
+        System.out.println("Кiлькiсть елементiв в LinkedHashSet: " + dateTimeSet.size());
 
         boolean allElementsPresent = true;
         for (LocalDateTime dateTimeElement : dateTimeArray) {
@@ -170,9 +170,9 @@ public class BasicDataOperationUsingSet {
         }
 
         if (allElementsPresent) {
-            System.out.println("Всi елементи масиву наявні в HashSet.");
+            System.out.println("Всi елементи масиву наявні в LinkedHashSet.");
         } else {
-            System.out.println("Не всi елементи масиву наявні в HashSet.");
+            System.out.println("Не всi елементи масиву наявні в LinkedHashSet.");
         }
     }
 }

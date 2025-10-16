@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -32,10 +32,10 @@ import java.util.Queue;
  * </pre>
  */
 public class BasicDataOperation {
-    static final String PATH_TO_DATA_FILE = "list/LocalDateTime.data";
+    static final String PATH_TO_DATA_FILE = "list/double";
 
     LocalDateTime dateTimeValueToSearch;
-    LocalDateTime[] dateTimeArray;
+    double[] dateTimeArray;
 
     private static final String SEPARATOR = "\n" + "=".repeat(80) + "\n";
     private static final String USAGE_MESSAGE = "Використання: java BasicDataOperation <пошукове-значення> \n" +
@@ -52,7 +52,7 @@ public class BasicDataOperation {
 
         // Валідація введеного значення дати
         try {
-            LocalDateTime.parse(searchValue, DateTimeFormatter.ISO_DATE_TIME);
+            Double.parseDouble(currentLine);
         } catch (Exception e) {
             System.out.println("Помилка: Невірний формат дати-часу. Використовуйте ISO формат (наприклад: 2024-03-16T00:12:38Z)");
             return;

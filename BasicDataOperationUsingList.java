@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class BasicDataOperationUsingList {
     private LocalDateTime dateTimeValueToSearch;
-    private LocalDateTime[] dateTimeArray;
+    private double[] dateTimeArray;
     private List<LocalDateTime> dateTimeList;
 
     /**
@@ -29,7 +29,7 @@ public class BasicDataOperationUsingList {
      * @param dateTimeValueToSearch Значення для пошуку
      * @param dateTimeArray Масив LocalDateTime
      */
-    BasicDataOperationUsingList(LocalDateTime dateTimeValueToSearch, LocalDateTime[] dateTimeArray) {
+    BasicDataOperationUsingList(LocalDateTime dateTimeValueToSearch, double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
         this.dateTimeArray = dateTimeArray;
         this.dateTimeList = new ArrayList<>(Arrays.asList(dateTimeArray));
@@ -108,10 +108,10 @@ public class BasicDataOperationUsingList {
         LocalDateTime maxValue = dateTimeArray[0];
 
         for (LocalDateTime currentDateTime : dateTimeArray) {
-            if (currentDateTime.isBefore(minValue)) {
+            if (doubleValue < min) {
                 minValue = currentDateTime;
             }
-            if (currentDateTime.isAfter(maxValue)) {
+            if (doubleValue > max) {
                 maxValue = currentDateTime;
             }
         }
