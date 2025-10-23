@@ -18,10 +18,10 @@
  * <p>Приклад використання:</p>
  * <pre>
  * {@code
- * java BasicDataOperation "1234567890" list
- * java BasicDataOperation "1234567890" queue  
- * java BasicDataOperation "1234567890" set
- * java BasicDataOperation "1234567890" all
+ * java BasicDataOperation "2024-03-16T00:12:38Z" list
+ * java BasicDataOperation "2024-03-16T00:12:38Z" queue  
+ * java BasicDataOperation "2024-03-16T00:12:38Z" set
+ * java BasicDataOperation "2024-03-16T00:12:38Z" all
  * }
  * </pre>
  */
@@ -34,7 +34,7 @@ public class BasicDataOperation {
     private static final String SEPARATOR = "\n" + "=".repeat(80) + "\n";
     private static final String USAGE_MESSAGE = "Використання: java BasicDataOperation <пошукове-значення> \n" +
 "Приклад:\n" +
-"  java BasicDataOperation \"1234567890\"";
+"  java BasicDataOperation \"2024-03-16T00:12:38Z\"";
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -46,9 +46,9 @@ public class BasicDataOperation {
 
         // Валідація введеного значення
         try {
-            Double.parseDouble(searchValue);
+            LocalDateTime.parse(searchValue, DateTimeFormatter.ISO_DATE_TIME);
         } catch (Exception e) {
-            System.out.println("Помилка: Невірний формат числа");
+            System.out.println("Помилка: Невірний формат дати-часу. Використовуйте ISO формат (наприклад: 2024-03-16T00:12:38Z)");
             return;
         }
 
@@ -68,7 +68,8 @@ public class BasicDataOperation {
         System.out.println(SEPARATOR);
         
         // Підготовка даних
-        dateTimeValueToSearch = Double.parseDouble(args[0]);
+        LocalDateTime searchDateTime = LocalDateTime.parse(args[0], DateTimeFormatter.ISO_DATE_TIME);
+        dateTimeValueToSearch = searchDateTime.toEpochSecond(java.time.ZoneOffset.UTC);
         dateTimeArray = DataFileHandler.loadArrayFromFile(PATH_TO_DATA_FILE);
         
         runAllOperations();
