@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -19,9 +19,9 @@ import java.util.Set;
  * </ul>
  */
 public class BasicDataOperationUsingSet {
-    LocalDateTime dateTimeValueToSearch;
-    double[] dateTimeArray;
-    Set<LocalDateTime> dateTimeSet = new LinkedHashSet<>();
+    private double dateTimeValueToSearch;
+    private double[] dateTimeArray;
+    private Set<Double> dateTimeSet;
 
     /**
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
@@ -29,10 +29,13 @@ public class BasicDataOperationUsingSet {
      * @param dateTimeValueToSearch Значення для пошуку
      * @param dateTimeArray Масив LocalDateTime
      */
-    BasicDataOperationUsingSet(LocalDateTime dateTimeValueToSearch, double[] dateTimeArray) {
+    BasicDataOperationUsingSet(double dateTimeValueToSearch, double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
-        this.dateTimeArray = dateTimeArray;
-        this.dateTimeSet = new LinkedHashSet<>(Arrays.asList(dateTimeArray));
+        this.dateTimeArray = dateTimeArray.clone();
+        this.dateTimeSet = new LinkedHashSet<>();
+        for (double value : dateTimeArray) {
+            this.dateTimeSet.add(value);
+        }
     }
     
     /**
@@ -99,15 +102,15 @@ public class BasicDataOperationUsingSet {
 
         long timeStart = System.nanoTime();
 
-        LocalDateTime minValue = dateTimeArray[0];
-        LocalDateTime maxValue = dateTimeArray[0];
+        double minValue = dateTimeArray[0];
+        double maxValue = dateTimeArray[0];
 
-        for (LocalDateTime currentDateTime : dateTimeArray) {
-            if (doubleValue < min) {
-                minValue = currentDateTime;
+        for (double currentValue : dateTimeArray) {
+            if (currentValue < minValue) {
+                minValue = currentValue;
             }
-            if (doubleValue > max) {
-                maxValue = currentDateTime;
+            if (currentValue > maxValue) {
+                maxValue = currentValue;
             }
         }
 
@@ -145,8 +148,8 @@ public class BasicDataOperationUsingSet {
 
         long timeStart = System.nanoTime();
 
-        LocalDateTime minValue = Collections.min(dateTimeSet);
-        LocalDateTime maxValue = Collections.max(dateTimeSet);
+        double minValue = Collections.min(dateTimeSet);
+        double maxValue = Collections.max(dateTimeSet);
 
         PerformanceTracker.displayOperationTime(timeStart, "визначення мiнiмальної i максимальної дати в LinkedHashSet");
 
@@ -162,8 +165,8 @@ public class BasicDataOperationUsingSet {
         System.out.println("Кiлькiсть елементiв в LinkedHashSet: " + dateTimeSet.size());
 
         boolean allElementsPresent = true;
-        for (LocalDateTime dateTimeElement : dateTimeArray) {
-            if (!dateTimeSet.contains(dateTimeElement)) {
+        for (double value : dateTimeArray) {
+            if (!dateTimeSet.contains(value)) {
                 allElementsPresent = false;
                 break;
             }

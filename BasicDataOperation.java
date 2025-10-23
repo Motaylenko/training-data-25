@@ -1,10 +1,4 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.Queue;
+
 
 /**
  * Загальний клас BasicDataOperation координує роботу різних структур даних.
@@ -24,23 +18,23 @@ import java.util.Queue;
  * <p>Приклад використання:</p>
  * <pre>
  * {@code
- * java BasicDataOperation "2024-03-16T00:12:38Z" list
- * java BasicDataOperation "2024-03-16T00:12:38Z" queue  
- * java BasicDataOperation "2024-03-16T00:12:38Z" set
- * java BasicDataOperation "2024-03-16T00:12:38Z" all
+ * java BasicDataOperation "1234567890" list
+ * java BasicDataOperation "1234567890" queue  
+ * java BasicDataOperation "1234567890" set
+ * java BasicDataOperation "1234567890" all
  * }
  * </pre>
  */
 public class BasicDataOperation {
-    static final String PATH_TO_DATA_FILE = "list/double";
+    static final String PATH_TO_DATA_FILE = "list/LocalDateTime.data.sorted";
 
-    LocalDateTime dateTimeValueToSearch;
+    double dateTimeValueToSearch;
     double[] dateTimeArray;
 
     private static final String SEPARATOR = "\n" + "=".repeat(80) + "\n";
     private static final String USAGE_MESSAGE = "Використання: java BasicDataOperation <пошукове-значення> \n" +
 "Приклад:\n" +
-"  java BasicDataOperation \"2025-01-02T20:42:25Z\"";
+"  java BasicDataOperation \"1234567890\"";
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -50,11 +44,11 @@ public class BasicDataOperation {
 
         String searchValue = args[0];
 
-        // Валідація введеного значення дати
+        // Валідація введеного значення
         try {
-            Double.parseDouble(currentLine);
+            Double.parseDouble(searchValue);
         } catch (Exception e) {
-            System.out.println("Помилка: Невірний формат дати-часу. Використовуйте ISO формат (наприклад: 2024-03-16T00:12:38Z)");
+            System.out.println("Помилка: Невірний формат числа");
             return;
         }
 
@@ -73,8 +67,8 @@ public class BasicDataOperation {
         System.out.println("Пошуковий параметр: " + args[0]);
         System.out.println(SEPARATOR);
         
-        // Підготовка даних та перевірка формату
-        dateTimeValueToSearch = LocalDateTime.parse(args[0], DateTimeFormatter.ISO_DATE_TIME);
+        // Підготовка даних
+        dateTimeValueToSearch = Double.parseDouble(args[0]);
         dateTimeArray = DataFileHandler.loadArrayFromFile(PATH_TO_DATA_FILE);
         
         runAllOperations();
@@ -95,7 +89,7 @@ public class BasicDataOperation {
         
         try {
             // Створення екземпляру класу з передаванням даних
-            BasicDataOperationUsingList listProcessor = new BasicDataOperationUsingList(dateTimeValueToSearch, dateTimeArray);
+            BasicDataOperationUsingList listProcessor = new BasicDataOperationUsingList(dateTimeValueToSearch, dateTimeArray.clone());
             listProcessor.executeDataOperations();
         } catch (Exception e) {
             System.out.println("❌ Помилка при роботі з List: " + e.getMessage());
@@ -114,7 +108,7 @@ public class BasicDataOperation {
         
         try {
             // Створення екземпляру класу з передаванням даних
-            BasicDataOperationUsingQueue queueProcessor = new BasicDataOperationUsingQueue(dateTimeValueToSearch, dateTimeArray);
+            BasicDataOperationUsingQueue queueProcessor = new BasicDataOperationUsingQueue(dateTimeValueToSearch, dateTimeArray.clone());
             queueProcessor.runDataProcessing();
         } catch (Exception e) {
             System.out.println("❌ Помилка при роботі з Queue: " + e.getMessage());
@@ -133,7 +127,7 @@ public class BasicDataOperation {
         
         try {
             // Створення екземпляру класу з передаванням даних           
-            BasicDataOperationUsingSet setProcessor = new BasicDataOperationUsingSet(dateTimeValueToSearch, dateTimeArray);
+            BasicDataOperationUsingSet setProcessor = new BasicDataOperationUsingSet(dateTimeValueToSearch, dateTimeArray.clone());
             setProcessor.executeDataAnalysis();
         } catch (Exception e) {
             System.out.println("❌ Помилка при роботі з Set: " + e.getMessage());

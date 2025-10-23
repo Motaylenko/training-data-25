@@ -3,22 +3,19 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
- * Клас DataFileHandler управляє роботою з файлами даних LocalDateTime.
+ * Клас DataFileHandler управляє роботою з файлами числових даних.
  */
 public class DataFileHandler {
     /**
-     * Завантажує масив об'єктів LocalDateTime з файлу.
+     * Завантажує масив чисел з файлу.
      * 
      * @param filePath Шлях до файлу з даними.
-     * @return Масив об'єктів LocalDateTime.
+     * @return Масив чисел.
      */
     public static double[] loadArrayFromFile(String filePath) {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_DATE_TIME;
-        double[] temporaryArray = new LocalDateTime[1000];
+        double[] temporaryArray = new double[1000];
         int currentIndex = 0;
 
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath))) {
@@ -27,30 +24,29 @@ public class DataFileHandler {
                 // Видаляємо можливі невидимі символи та BOM
                 currentLine = currentLine.trim().replaceAll("^\\uFEFF", "");
                 if (!currentLine.isEmpty()) {
-                    LocalDateTime parsedDateTime = LocalDateTime.parse(currentLine, timeFormatter);
-                    temporaryArray[currentIndex++] = parsedDateTime;
+                    temporaryArray[currentIndex++] = Double.parseDouble(currentLine);
                 }
             }
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
 
-        double[] resultArray = new LocalDateTime[currentIndex];
+        double[] resultArray = new double[currentIndex];
         System.arraycopy(temporaryArray, 0, resultArray, 0, currentIndex);
 
         return resultArray;
     }
 
     /**
-     * Зберігає масив об'єктів LocalDateTime у файл.
+     * Зберігає масив чисел у файл.
      * 
-     * @param dateTimeArray Масив об'єктів LocalDateTime.
+     * @param dateTimeArray Масив чисел.
      * @param filePath Шлях до файлу для збереження.
      */
     public static void writeArrayToFile(double[] dateTimeArray, String filePath) {
         try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(filePath))) {
-            for (LocalDateTime dateTimeElement : dateTimeArray) {
-                fileWriter.write(dateTimeElement.toString());
+            for (double value : dateTimeArray) {
+                fileWriter.write(String.valueOf(value));
                 fileWriter.newLine();
             }
         } catch (IOException ioException) {

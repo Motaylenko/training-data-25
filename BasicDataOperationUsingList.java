@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,9 +19,9 @@ import java.util.List;
  * </ul>
  */
 public class BasicDataOperationUsingList {
-    private LocalDateTime dateTimeValueToSearch;
+    private double dateTimeValueToSearch;
     private double[] dateTimeArray;
-    private List<LocalDateTime> dateTimeList;
+    private List<Double> dateTimeList;
 
     /**
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
@@ -29,10 +29,15 @@ public class BasicDataOperationUsingList {
      * @param dateTimeValueToSearch Значення для пошуку
      * @param dateTimeArray Масив LocalDateTime
      */
-    BasicDataOperationUsingList(LocalDateTime dateTimeValueToSearch, double[] dateTimeArray) {
+    BasicDataOperationUsingList(double dateTimeValueToSearch, double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
-        this.dateTimeArray = dateTimeArray;
-        this.dateTimeList = new ArrayList<>(Arrays.asList(dateTimeArray));
+        this.dateTimeArray = dateTimeArray.clone();
+        this.dateTimeList = new ArrayList<>(dateTimeArray.length);
+        
+        // Заповнюємо список даними з масиву
+        for (double value : dateTimeArray) {
+            this.dateTimeList.add(value);
+        }
     }
     
     /**
@@ -104,15 +109,15 @@ public class BasicDataOperationUsingList {
 
         long timeStart = System.nanoTime();
 
-        LocalDateTime minValue = dateTimeArray[0];
-        LocalDateTime maxValue = dateTimeArray[0];
+        double minValue = dateTimeArray[0];
+        double maxValue = dateTimeArray[0];
 
-        for (LocalDateTime currentDateTime : dateTimeArray) {
-            if (doubleValue < min) {
-                minValue = currentDateTime;
+        for (double currentValue : dateTimeArray) {
+            if (currentValue < minValue) {
+                minValue = currentValue;
             }
-            if (doubleValue > max) {
-                maxValue = currentDateTime;
+            if (currentValue > maxValue) {
+                maxValue = currentValue;
             }
         }
 
@@ -150,8 +155,8 @@ public class BasicDataOperationUsingList {
 
         long timeStart = System.nanoTime();
 
-        LocalDateTime minValue = Collections.min(dateTimeList);
-        LocalDateTime maxValue = Collections.max(dateTimeList);
+        double minValue = Collections.min(dateTimeList);
+        double maxValue = Collections.max(dateTimeList);
 
         PerformanceTracker.displayOperationTime(timeStart, "визначення мiнiмальної i максимальної дати в List");
 

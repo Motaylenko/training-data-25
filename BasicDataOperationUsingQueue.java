@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;
+
 import java.util.Queue;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,9 +20,9 @@ import java.util.PriorityQueue;
  * 
  */
 public class BasicDataOperationUsingQueue {
-    private LocalDateTime dateTimeValueToSearch;
+    private double dateTimeValueToSearch;
     private double[] dateTimeArray;
-    private Queue<LocalDateTime> dateTimeQueue;
+    private Queue<Double> dateTimeQueue;
 
     /**
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
@@ -30,10 +30,16 @@ public class BasicDataOperationUsingQueue {
      * @param dateTimeValueToSearch Значення для пошуку
      * @param dateTimeArray Масив LocalDateTime
      */
-    BasicDataOperationUsingQueue(LocalDateTime dateTimeValueToSearch, double[] dateTimeArray) {
+    BasicDataOperationUsingQueue(double dateTimeValueToSearch, double[] dateTimeArray) {
+        // Конвертуємо LocalDateTime в double
         this.dateTimeValueToSearch = dateTimeValueToSearch;
-        this.dateTimeArray = dateTimeArray;
-        this.dateTimeQueue = new PriorityQueue<>(Arrays.asList(dateTimeArray));
+        this.dateTimeArray = dateTimeArray.clone();
+        
+        // Ініціалізуємо чергу з масиву double
+        this.dateTimeQueue = new PriorityQueue<>();
+        for (double value : dateTimeArray) {
+            this.dateTimeQueue.add(value);
+        }
     }
     
     /**
@@ -103,15 +109,15 @@ public class BasicDataOperationUsingQueue {
         // відстежуємо час на визначення граничних значень
         long timeStart = System.nanoTime();
 
-        LocalDateTime minValue = dateTimeArray[0];
-        LocalDateTime maxValue = dateTimeArray[0];
+        double minValue = dateTimeArray[0];
+        double maxValue = dateTimeArray[0];
 
-        for (LocalDateTime currentDateTime : dateTimeArray) {
-            if (doubleValue < min) {
-                minValue = currentDateTime;
+        for (double currentValue : dateTimeArray) {
+            if (currentValue < minValue) {
+                minValue = currentValue;
             }
-            if (doubleValue > max) {
-                maxValue = currentDateTime;
+            if (currentValue > maxValue) {
+                maxValue = currentValue;
             }
         }
 
@@ -151,8 +157,8 @@ public class BasicDataOperationUsingQueue {
         // відстежуємо час пошуку граничних значень
         long timeStart = System.nanoTime();
 
-        LocalDateTime minValue = Collections.min(dateTimeQueue);
-        LocalDateTime maxValue = Collections.max(dateTimeQueue);
+        double minValue = Collections.min(dateTimeQueue);
+        double maxValue = Collections.max(dateTimeQueue);
 
         PerformanceTracker.displayOperationTime(timeStart, "визначення мiнiмальної i максимальної дати в Queue");
 
@@ -169,7 +175,7 @@ public class BasicDataOperationUsingQueue {
             return;
         }
 
-        LocalDateTime headElement = dateTimeQueue.peek();
+        double headElement = dateTimeQueue.peek();
         System.out.println("Головний елемент черги (peek): " + headElement);
 
         headElement = dateTimeQueue.poll();
