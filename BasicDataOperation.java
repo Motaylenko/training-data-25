@@ -5,7 +5,7 @@
  * 
  * <p>Цей клас служить центральною точкою для демонстрації операцій з різними
  * колекціями Java: List, Queue та Set. Він об'єднує функціональність всіх
- * спеціалізованих класів для комплексного аналізу даних LocalDateTime.</p>
+ * спеціалізованих класів для комплексного аналізу числових даних.</p>
  * 
  * <p>Основні можливості:</p>
  * <ul>
@@ -18,10 +18,10 @@
  * <p>Приклад використання:</p>
  * <pre>
  * {@code
- * java BasicDataOperation "2024-03-16T00:12:38Z" list
- * java BasicDataOperation "2024-03-16T00:12:38Z" queue  
- * java BasicDataOperation "2024-03-16T00:12:38Z" set
- * java BasicDataOperation "2024-03-16T00:12:38Z" all
+ * java BasicDataOperation "1234567890" list
+ * java BasicDataOperation "1234567890" queue  
+ * java BasicDataOperation "1234567890" set
+ * java BasicDataOperation "1234567890" all
  * }
  * </pre>
  */
@@ -34,7 +34,7 @@ public class BasicDataOperation {
     private static final String SEPARATOR = "\n" + "=".repeat(80) + "\n";
     private static final String USAGE_MESSAGE = "Використання: java BasicDataOperation <пошукове-значення> \n" +
 "Приклад:\n" +
-"  java BasicDataOperation \"2024-03-16T00:12:38Z\"";
+"  java BasicDataOperation \"1234567890\"";
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -46,9 +46,9 @@ public class BasicDataOperation {
 
         // Валідація введеного значення
         try {
-            LocalDateTime.parse(searchValue, DateTimeFormatter.ISO_DATE_TIME);
+            Double.parseDouble(searchValue);
         } catch (Exception e) {
-            System.out.println("Помилка: Невірний формат дати-часу. Використовуйте ISO формат (наприклад: 2024-03-16T00:12:38Z)");
+            System.out.println("Помилка: Невірний формат числа");
             return;
         }
 
@@ -68,8 +68,7 @@ public class BasicDataOperation {
         System.out.println(SEPARATOR);
         
         // Підготовка даних
-        LocalDateTime searchDateTime = LocalDateTime.parse(args[0], DateTimeFormatter.ISO_DATE_TIME);
-        dateTimeValueToSearch = searchDateTime.toEpochSecond(java.time.ZoneOffset.UTC);
+        dateTimeValueToSearch = Double.parseDouble(args[0]);
         dateTimeArray = DataFileHandler.loadArrayFromFile(PATH_TO_DATA_FILE);
         
         runAllOperations();
