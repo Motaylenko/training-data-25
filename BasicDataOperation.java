@@ -26,7 +26,7 @@
  * </pre>
  */
 public class BasicDataOperation {
-    static final String PATH_TO_DATA_FILE = "list/double.data.sorted";
+    static final String PATH_TO_DATA_FILE = "list/double.data";
 
     double dateTimeValueToSearch;
     double[] dateTimeArray;
