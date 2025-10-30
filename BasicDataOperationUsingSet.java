@@ -5,15 +5,15 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Клас BasicDataOperationUsingSet реалізує операції з множиною LinkedHashSet для LocalDateTime.
+ * Клас BasicDataOperationUsingSet реалізує операції з множиною LinkedHashSet для числових даних.
  * 
  * <p>Методи класу:</p>
  * <ul>
  *   <li>{@link #executeDataAnalysis()} - Запускає аналіз даних.</li>
- *   <li>{@link #performArraySorting()} - Упорядковує масив LocalDateTime.</li>
- *   <li>{@link #findInArray()} - Пошук значення в масиві LocalDateTime.</li>
+ *   <li>{@link #performArraySorting()} - Упорядковує масив чисел.</li>
+ *   <li>{@link #findInArray()} - Пошук значення в масиві.</li>
  *   <li>{@link #locateMinMaxInArray()} - Знаходить граничні значення в масиві.</li>
- *   <li>{@link #findInSet()} - Пошук значення в множині LocalDateTime.</li>
+ *   <li>{@link #findInSet()} - Пошук значення в множині.</li>
  *   <li>{@link #locateMinMaxInSet()} - Знаходить мінімальне і максимальне значення в множині.</li>
  *   <li>{@link #analyzeArrayAndSet()} - Аналізує елементи масиву та множини.</li>
  * </ul>
@@ -27,7 +27,7 @@ public class BasicDataOperationUsingSet {
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
      * 
      * @param dateTimeValueToSearch Значення для пошуку
-     * @param dateTimeArray Масив LocalDateTime
+     * @param dateTimeArray Масив числових даних
      */
     BasicDataOperationUsingSet(double dateTimeValueToSearch, double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
@@ -41,7 +41,7 @@ public class BasicDataOperationUsingSet {
     /**
      * Запускає комплексний аналіз даних з використанням множини LinkedHashSet.
      * 
-     * Метод завантажує дані, виконує операції з множиною та масивом LocalDateTime.
+     * Метод завантажує дані, виконує операції з множиною та масивом чисел.
      */
     public void executeDataAnalysis() {
         // спочатку аналізуємо множину дати та часу
@@ -63,7 +63,7 @@ public class BasicDataOperationUsingSet {
     }
 
     /**
-     * Упорядковує масив об'єктів LocalDateTime за зростанням.
+     * Упорядковує масив чисел за зростанням.
      * Фіксує та виводить тривалість операції сортування в наносекундах.
      */
     private void performArraySorting() {
@@ -92,7 +92,7 @@ public class BasicDataOperationUsingSet {
     }
 
     /**
-     * Визначає найменше та найбільше значення в масиві LocalDateTime.
+     * Визначає найменше та найбільше значення в масиві чисел.
      */
     private void locateMinMaxInArray() {
         if (dateTimeArray == null || dateTimeArray.length == 0) {
@@ -138,7 +138,7 @@ public class BasicDataOperationUsingSet {
     }
 
     /**
-     * Визначає найменше та найбільше значення в множині LocalDateTime.
+     * Визначає найменше та найбільше значення в множині чисел.
      */
     private void locateMinMaxInSet() {
         if (dateTimeSet == null || dateTimeSet.isEmpty()) {

@@ -5,15 +5,15 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Клас BasicDataOperationUsingList реалізує операції з колекціями типу ArrayList для даних LocalDateTime.
+ * Клас BasicDataOperationUsingList реалізує операції з колекціями типу ArrayList для числових даних.
  * 
  * <p>Методи класу:</p>
  * <ul>
  *   <li>{@link #executeDataOperations()} - Виконує комплекс операцій з даними.</li>
- *   <li>{@link #performArraySorting()} - Упорядковує масив елементів LocalDateTime.</li>
- *   <li>{@link #findInArray()} - Здійснює пошук елемента в масиві LocalDateTime.</li>
+ *   <li>{@link #performArraySorting()} - Упорядковує масив чисел.</li>
+ *   <li>{@link #findInArray()} - Здійснює пошук елемента в масиві.</li>
  *   <li>{@link #locateMinMaxInArray()} - Визначає найменше і найбільше значення в масиві.</li>
- *   <li>{@link #sortList()} - Сортує колекцію List з LocalDateTime.</li>
+ *   <li>{@link #sortList()} - Сортує колекцію List.</li>
  *   <li>{@link #findInList()} - Пошук конкретного значення в списку.</li>
  *   <li>{@link #locateMinMaxInList()} - Пошук мінімального і максимального значення в списку.</li>
  * </ul>
@@ -27,7 +27,7 @@ public class BasicDataOperationUsingList {
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
      * 
      * @param dateTimeValueToSearch Значення для пошуку
-     * @param dateTimeArray Масив LocalDateTime
+     * @param numbersArray Масив чисел
      */
     BasicDataOperationUsingList(double dateTimeValueToSearch, double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
@@ -43,7 +43,7 @@ public class BasicDataOperationUsingList {
     /**
      * Виконує комплексні операції з структурами даних.
      * 
-     * Метод завантажує масив і список об'єктів LocalDateTime, 
+     * Метод завантажує масив і список чисел, 
      * здійснює сортування та пошукові операції.
      */
     public void executeDataOperations() {
@@ -70,7 +70,7 @@ public class BasicDataOperationUsingList {
     }
 
     /**
-     * Упорядковує масив об'єктів LocalDateTime за зростанням.
+     * Упорядковує масив чисел за зростанням.
      * Фіксує та виводить тривалість операції сортування в наносекундах.
      */
     void performArraySorting() {
@@ -165,7 +165,7 @@ public class BasicDataOperationUsingList {
     }
 
     /**
-     * Упорядковує колекцію List з об'єктами LocalDateTime за зростанням.
+     * Упорядковує колекцію List з числами за зростанням.
      * Відстежує та виводить час виконання операції сортування.
      */
     void sortList() {

@@ -5,15 +5,15 @@ import java.util.Collections;
 import java.util.PriorityQueue;
 
 /**
- * Клас BasicDataOperationUsingQueue реалізує роботу з колекціями типу Queue для LocalDateTime.
+ * Клас BasicDataOperationUsingQueue реалізує роботу з колекціями типу Queue для числових даних.
  * 
  * <p>Основні функції класу:</p>
  * <ul>
  *   <li>{@link #runDataProcessing()} - Запускає комплекс операцій з даними.</li>
- *   <li>{@link #performArraySorting()} - Упорядковує масив LocalDateTime.</li>
- *   <li>{@link #findInArray()} - Пошук значення в масиві LocalDateTime.</li>
+ *   <li>{@link #performArraySorting()} - Упорядковує масив чисел.</li>
+ *   <li>{@link #findInArray()} - Пошук значення в масиві.</li>
  *   <li>{@link #locateMinMaxInArray()} - Знаходить мінімальне і максимальне значення в масиві.</li>
- *   <li>{@link #findInQueue()} - Пошук значення в черзі LocalDateTime.</li>
+ *   <li>{@link #findInQueue()} - Пошук значення в черзі.</li>
  *   <li>{@link #locateMinMaxInQueue()} - Знаходить граничні значення в черзі.</li>
  *   <li>{@link #performQueueOperations()} - Виконує операції peek і poll з чергою.</li>
  * </ul>
@@ -28,10 +28,10 @@ public class BasicDataOperationUsingQueue {
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
      * 
      * @param dateTimeValueToSearch Значення для пошуку
-     * @param dateTimeArray Масив LocalDateTime
+     * @param dateTimeArray Масив числових даних
      */
     BasicDataOperationUsingQueue(double dateTimeValueToSearch, double[] dateTimeArray) {
-        // Конвертуємо LocalDateTime в double
+        // Перетворюємо рядок в число
         this.dateTimeValueToSearch = dateTimeValueToSearch;
         this.dateTimeArray = dateTimeArray.clone();
         
@@ -45,7 +45,7 @@ public class BasicDataOperationUsingQueue {
     /**
      * Запускає комплексну обробку даних з використанням черги.
      * 
-     * Метод завантажує дані, виконує операції з чергою та масивом LocalDateTime.
+     * Метод завантажує дані, виконує операції з чергою та масивом чисел.
      */
     public void runDataProcessing() {
         // спочатку обробляємо чергу дати та часу
@@ -67,7 +67,7 @@ public class BasicDataOperationUsingQueue {
     }
 
     /**
-     * Сортує масив об'єктiв LocalDateTime та виводить початковий i вiдсортований масиви.
+     * Сортує масив чисел та виводить початковий i вiдсортований масиви.
      * Вимiрює та виводить час, витрачений на сортування масиву в наносекундах.
      */
     private void performArraySorting() {
@@ -98,7 +98,7 @@ public class BasicDataOperationUsingQueue {
     }
 
     /**
-     * Визначає найменше та найбільше значення в масиві LocalDateTime.
+     * Визначає найменше та найбільше значення в масиві чисел.
      */
     private void locateMinMaxInArray() {
         if (dateTimeArray == null || dateTimeArray.length == 0) {
@@ -146,7 +146,7 @@ public class BasicDataOperationUsingQueue {
     }
 
     /**
-     * Визначає найменше та найбільше значення в черзі LocalDateTime.
+     * Визначає найменше та найбільше значення в черзі чисел.
      */
     private void locateMinMaxInQueue() {
         if (dateTimeQueue == null || dateTimeQueue.isEmpty()) {
@@ -167,7 +167,7 @@ public class BasicDataOperationUsingQueue {
     }
 
     /**
-     * Виконує операції peek і poll з чергою LocalDateTime.
+     * Виконує операції peek і poll з чергою чисел.
      */
     private void performQueueOperations() {
         if (dateTimeQueue == null || dateTimeQueue.isEmpty()) {

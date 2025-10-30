@@ -26,7 +26,7 @@
  * </pre>
  */
 public class BasicDataOperation {
-    static final String PATH_TO_DATA_FILE = "list/LocalDateTime.data.sorted";
+    static final String PATH_TO_DATA_FILE = "list/double.data.sorted";
 
     double dateTimeValueToSearch;
     double[] dateTimeArray;
@@ -63,7 +63,7 @@ public class BasicDataOperation {
      */
     private void executeOperations(String[] args) {
         System.out.println(SEPARATOR);
-        System.out.println("🚀 РОЗПОЧАТО АНАЛІЗ ДАНИХ LocalDateTime 🚀");
+        System.out.println("🚀 РОЗПОЧАТО АНАЛІЗ ЧИСЛОВИХ ДАНИХ 🚀");
         System.out.println("Пошуковий параметр: " + args[0]);
         System.out.println(SEPARATOR);
         
