@@ -16,7 +16,7 @@
             "name": "BasicDataOperation",
             "request": "launch",
             "mainClass": "${file}",
-            "args": "7.946786E-264"
+            "args": "-5.345692E+106"
         }
     ]
 }
