@@ -22,11 +22,11 @@ import java.util.LinkedHashMap;
  * </ul>
  */
 public class BasicDataOperationUsingMap {
-    private final Parrot KEY_TO_SEARCH_AND_DELETE = new Parrot("Луна", "Полярна сова");
-    private final Parrot KEY_TO_ADD = new Parrot("Кір", "Сова вухата");
+    private final Parrot KEY_TO_SEARCH_AND_DELETE = new Parrot("Чижик", "Жако");
+    private final Parrot KEY_TO_ADD = new Parrot("Оскар", "Розела");
 
     private final String VALUE_TO_SEARCH_AND_DELETE = "Єва";
-    private final String VALUE_TO_ADD = "Богдан";
+    private final String VALUE_TO_ADD = "Марина";
 
     private HashMap<Parrot, String> hashtable;
     private LinkedHashMap<Parrot, String> treeMap;
