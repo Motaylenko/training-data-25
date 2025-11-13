@@ -1,11 +1,11 @@
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Клас BasicDataOperationUsingSet реалізує операції з множиною LinkedHashSet для числових даних.
+ * Клас BasicDataOperationUsingSet реалізує операції з множиною HashSet для числових даних.
  * 
  * <p>Методи класу:</p>
  * <ul>
@@ -32,14 +32,14 @@ public class BasicDataOperationUsingSet {
     BasicDataOperationUsingSet(double dateTimeValueToSearch, double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
         this.dateTimeArray = dateTimeArray.clone();
-        this.dateTimeSet = new LinkedHashSet<>();
+        this.dateTimeSet = new HashSet<>();
         for (double value : dateTimeArray) {
             this.dateTimeSet.add(value);
         }
     }
     
     /**
-     * Запускає комплексний аналіз даних з використанням множини LinkedHashSet.
+     * Запускає комплексний аналіз даних з використанням множини HashSet.
      * 
      * Метод завантажує дані, виконує операції з множиною та масивом чисел.
      */

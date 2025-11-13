@@ -1,5 +1,5 @@
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +32,7 @@ public class BasicDataOperationUsingList {
     BasicDataOperationUsingList(double dateTimeValueToSearch, double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
         this.dateTimeArray = dateTimeArray.clone();
-        this.dateTimeList = new ArrayList<>(dateTimeArray.length);
+        this.dateTimeList = new LinkedList<>();
         
         // Заповнюємо список даними з масиву
         for (double value : dateTimeArray) {
