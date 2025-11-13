@@ -238,6 +238,70 @@ public class BasicDataOperationUsingMap {
         removeByValueFromTreeMap();
         
         System.out.println("Кінцевий розмір LinkedHashMap: " + treeMap.size());
+
+        // Додатково: порівняння продуктивності HashMap vs LinkedHashMap
+        compareHashMapVsLinkedHashMapPerformance(50000);
+    }
+
+    /**
+     * Порівняння продуктивності операцій вставки, пошуку та видалення
+     * для HashMap і LinkedHashMap.
+     * 
+     * @param size кількість елементів для тесту
+     */
+    private void compareHashMapVsLinkedHashMapPerformance(int size) {
+        System.out.println("\n=== ПОРІВНЯННЯ ПРОДУКТИВНОСТІ: HashMap vs LinkedHashMap (size=" + size + ") ===");
+
+        // Підготуємо тестові ключі та значення
+        Parrot[] keys = new Parrot[size];
+        String[] values = new String[size];
+        for (int i = 0; i < size; i++) {
+            keys[i] = new Parrot("nick-" + i, "species-" + (i % 100));
+            values[i] = "owner-" + i;
+        }
+
+        // Вставка
+        long t0 = System.nanoTime();
+        HashMap<Parrot, String> hm = new HashMap<>();
+        for (int i = 0; i < size; i++) hm.put(keys[i], values[i]);
+        long t1 = System.nanoTime();
+
+        long t2 = System.nanoTime();
+        LinkedHashMap<Parrot, String> lhm = new LinkedHashMap<>();
+        for (int i = 0; i < size; i++) lhm.put(keys[i], values[i]);
+        long t3 = System.nanoTime();
+
+        System.out.println(String.format("Insert: HashMap=%,d µs, LinkedHashMap=%,d µs", (t1-t0)/1000, (t3-t2)/1000));
+
+        // Пошук (containsKey)
+        long ts0 = System.nanoTime();
+        int foundHm = 0;
+        for (int i = 0; i < size; i+=100) {
+            if (hm.containsKey(keys[i])) foundHm++;
+        }
+        long ts1 = System.nanoTime();
+
+        long ts2 = System.nanoTime();
+        int foundLhm = 0;
+        for (int i = 0; i < size; i+=100) {
+            if (lhm.containsKey(keys[i])) foundLhm++;
+        }
+        long ts3 = System.nanoTime();
+
+        System.out.println(String.format("Search (every100): HashMap=%,d µs, LinkedHashMap=%,d µs (found %d / %d)", (ts1-ts0)/1000, (ts3-ts2)/1000, foundHm, foundLhm));
+
+        // Видалення
+        long tr0 = System.nanoTime();
+        for (int i = 0; i < size; i++) hm.remove(keys[i]);
+        long tr1 = System.nanoTime();
+
+        long tr2 = System.nanoTime();
+        for (int i = 0; i < size; i++) lhm.remove(keys[i]);
+        long tr3 = System.nanoTime();
+
+        System.out.println(String.format("Remove: HashMap=%,d µs, LinkedHashMap=%,d µs", (tr1-tr0)/1000, (tr3-tr2)/1000));
+
+        System.out.println("=== КІНЕЦЬ ПОРІВНЯННЯ ===\n");
     }
 
 
