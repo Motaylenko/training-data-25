@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class BasicDataOperationUsingList {
     private double dateTimeValueToSearch;
-    private double[] dateTimeArray;
+    private Double[] dateTimeArray;
     private List<Double> dateTimeList;
 
     /**
@@ -29,7 +29,7 @@ public class BasicDataOperationUsingList {
      * @param dateTimeValueToSearch Значення для пошуку
      * @param numbersArray Масив чисел
      */
-    BasicDataOperationUsingList(double dateTimeValueToSearch, double[] dateTimeArray) {
+    BasicDataOperationUsingList(double dateTimeValueToSearch, Double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
         this.dateTimeArray = dateTimeArray.clone();
         this.dateTimeList = new LinkedList<>();

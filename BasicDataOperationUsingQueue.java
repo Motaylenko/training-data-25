@@ -21,7 +21,7 @@ import java.util.PriorityQueue;
  */
 public class BasicDataOperationUsingQueue {
     private double dateTimeValueToSearch;
-    private double[] dateTimeArray;
+    private Double[] dateTimeArray;
     private Queue<Double> dateTimeQueue;
 
     /**
@@ -30,7 +30,7 @@ public class BasicDataOperationUsingQueue {
      * @param dateTimeValueToSearch Значення для пошуку
      * @param dateTimeArray Масив числових даних
      */
-    BasicDataOperationUsingQueue(double dateTimeValueToSearch, double[] dateTimeArray) {
+    BasicDataOperationUsingQueue(double dateTimeValueToSearch, Double[] dateTimeArray) {
         // Перетворюємо рядок в число
         this.dateTimeValueToSearch = dateTimeValueToSearch;
         this.dateTimeArray = dateTimeArray.clone();

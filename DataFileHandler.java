@@ -14,8 +14,8 @@ public class DataFileHandler {
      * @param filePath Шлях до файлу з даними.
      * @return Масив чисел.
      */
-    public static double[] loadArrayFromFile(String filePath) {
-        double[] temporaryArray = new double[1000];
+    public static Double[] loadArrayFromFile(String filePath) {
+        Double[] temporaryArray = new Double[1000];
         int currentIndex = 0;
 
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath))) {
@@ -31,7 +31,7 @@ public class DataFileHandler {
             e.printStackTrace();
         }
 
-        double[] resultArray = new double[currentIndex];
+        Double[] resultArray = new Double[currentIndex];
         System.arraycopy(temporaryArray, 0, resultArray, 0, currentIndex);
 
         return resultArray;
@@ -43,7 +43,7 @@ public class DataFileHandler {
      * @param numbersArray Масив чисел.
      * @param filePath Шлях до файлу для збереження.
      */
-    public static void writeArrayToFile(double[] numbersArray, String filePath) {
+    public static void writeArrayToFile(Double[] numbersArray, String filePath) {
         try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(filePath))) {
             for (double value : numbersArray) {
                 fileWriter.write(String.valueOf(value));

@@ -20,7 +20,7 @@ import java.util.Set;
  */
 public class BasicDataOperationUsingSet {
     private double dateTimeValueToSearch;
-    private double[] dateTimeArray;
+    private Double[] dateTimeArray;
     private Set<Double> dateTimeSet;
 
     /**
@@ -29,7 +29,7 @@ public class BasicDataOperationUsingSet {
      * @param dateTimeValueToSearch Значення для пошуку
      * @param dateTimeArray Масив числових даних
      */
-    BasicDataOperationUsingSet(double dateTimeValueToSearch, double[] dateTimeArray) {
+    BasicDataOperationUsingSet(double dateTimeValueToSearch, Double[] dateTimeArray) {
         this.dateTimeValueToSearch = dateTimeValueToSearch;
         this.dateTimeArray = dateTimeArray.clone();
         this.dateTimeSet = new HashSet<>();

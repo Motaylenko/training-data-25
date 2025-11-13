@@ -29,7 +29,7 @@ public class BasicDataOperation {
     static final String PATH_TO_DATA_FILE = "list/double.data";
 
     double dateTimeValueToSearch;
-    double[] dateTimeArray;
+    Double[] dateTimeArray;
 
     private static final String SEPARATOR = "\n" + "=".repeat(80) + "\n";
     private static final String USAGE_MESSAGE = "Використання: java BasicDataOperation <пошукове-значення> \n" +
