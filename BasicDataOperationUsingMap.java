@@ -205,21 +205,21 @@ public class BasicDataOperationUsingMap {
         System.out.println("Початковий розмір HashMap: " + hashtable.size());
         
         // Пошук до сортування
-        findByKeyInHashtable();
-        findByValueInHashtable();
+        findByKeyInHashMap();
+        findByValueInHashMap();
 
         printHashMap();
         sortHashMap();
         printHashMap();
 
         // Пошук після сортування
-        findByKeyInHashtable();
-        findByValueInHashtable();
+        findByKeyInHashMap();
+        findByValueInHashMap();
 
-        addEntryToHashtable();
+        addEntryToHashMap();
         
-        removeByKeyFromHashtable();
-        removeByValueFromHashtable();
+        removeByKeyFromHashMap();
+        removeByValueFromHashMap();
                
         System.out.println("Кінцевий розмір HashMap: " + hashtable.size());
 
@@ -227,20 +227,17 @@ public class BasicDataOperationUsingMap {
         System.out.println("\n\n========= Операції з LinkedHashMap (раніше TreeMap) =========");
         System.out.println("Початковий розмір LinkedHashMap: " + treeMap.size());
         
-        findByKeyInTreeMap();
-        findByValueInTreeMap();
+        findByKeyInLinkedHashMap();
+        findByValueInLinkedHashMap();
 
-        printTreeMap();
+        printLinkedHashMap();
 
-        addEntryToTreeMap();
+        addEntryToLinkedHashMap();
         
-        removeByKeyFromTreeMap();
-        removeByValueFromTreeMap();
+        removeByKeyFromLinkedHashMap();
+        removeByValueFromLinkedHashMap();
         
         System.out.println("Кінцевий розмір LinkedHashMap: " + treeMap.size());
-
-        // Додатково: порівняння продуктивності HashMap vs LinkedHashMap
-        compareHashMapVsLinkedHashMapPerformance(50000);
     }
 
     /**
@@ -249,67 +246,14 @@ public class BasicDataOperationUsingMap {
      * 
      * @param size кількість елементів для тесту
      */
-    private void compareHashMapVsLinkedHashMapPerformance(int size) {
-        System.out.println("\n=== ПОРІВНЯННЯ ПРОДУКТИВНОСТІ: HashMap vs LinkedHashMap (size=" + size + ") ===");
-
-        // Підготуємо тестові ключі та значення
-        Parrot[] keys = new Parrot[size];
-        String[] values = new String[size];
-        for (int i = 0; i < size; i++) {
-            keys[i] = new Parrot("nick-" + i, "species-" + (i % 100));
-            values[i] = "owner-" + i;
-        }
-
-        // Вставка
-        long t0 = System.nanoTime();
-        HashMap<Parrot, String> hm = new HashMap<>();
-        for (int i = 0; i < size; i++) hm.put(keys[i], values[i]);
-        long t1 = System.nanoTime();
-
-        long t2 = System.nanoTime();
-        LinkedHashMap<Parrot, String> lhm = new LinkedHashMap<>();
-        for (int i = 0; i < size; i++) lhm.put(keys[i], values[i]);
-        long t3 = System.nanoTime();
-
-        System.out.println(String.format("Insert: HashMap=%,d µs, LinkedHashMap=%,d µs", (t1-t0)/1000, (t3-t2)/1000));
-
-        // Пошук (containsKey)
-        long ts0 = System.nanoTime();
-        int foundHm = 0;
-        for (int i = 0; i < size; i+=100) {
-            if (hm.containsKey(keys[i])) foundHm++;
-        }
-        long ts1 = System.nanoTime();
-
-        long ts2 = System.nanoTime();
-        int foundLhm = 0;
-        for (int i = 0; i < size; i+=100) {
-            if (lhm.containsKey(keys[i])) foundLhm++;
-        }
-        long ts3 = System.nanoTime();
-
-        System.out.println(String.format("Search (every100): HashMap=%,d µs, LinkedHashMap=%,d µs (found %d / %d)", (ts1-ts0)/1000, (ts3-ts2)/1000, foundHm, foundLhm));
-
-        // Видалення
-        long tr0 = System.nanoTime();
-        for (int i = 0; i < size; i++) hm.remove(keys[i]);
-        long tr1 = System.nanoTime();
-
-        long tr2 = System.nanoTime();
-        for (int i = 0; i < size; i++) lhm.remove(keys[i]);
-        long tr3 = System.nanoTime();
-
-        System.out.println(String.format("Remove: HashMap=%,d µs, LinkedHashMap=%,d µs", (tr1-tr0)/1000, (tr3-tr2)/1000));
-
-        System.out.println("=== КІНЕЦЬ ПОРІВНЯННЯ ===\n");
-    }
+    
 
 
-    // ===== Методи для Hashtable =====
+    // ===== Методи для HashMap =====
 
     /**
-     * Виводить вміст Hashtable без сортування.
-     * Hashtable не гарантує жодного порядку елементів.
+     * Виводить вміст HashMap без сортування.
+     * HashMap не гарантує жодного порядку елементів.
      */
     private void printHashMap() {
         System.out.println("\n=== Пари ключ-значення в HashMap ===");
@@ -323,9 +267,9 @@ public class BasicDataOperationUsingMap {
     }
 
     /**
-     * Сортує Hashtable за ключами.
+     * Сортує HashMap за ключами.
      * Використовує Collections.sort() з природним порядком Parrot (Parrot.compareTo()).
-     * Перезаписує hashtable відсортованими даними.
+     * Перезаписує HashMap відсортованими даними.
      */
     private void sortHashMap() {
         long timeStart = System.nanoTime();
@@ -347,29 +291,29 @@ public class BasicDataOperationUsingMap {
     }
 
     /**
-     * Здійснює пошук елемента за ключем в Hashtable.
+     * Здійснює пошук елемента за ключем в HashMap.
      * Використовує Parrot.hashCode() та Parrot.equals() для пошуку.
      */
-    void findByKeyInHashtable() {
+    void findByKeyInHashMap() {
         long timeStart = System.nanoTime();
 
         boolean found = hashtable.containsKey(KEY_TO_SEARCH_AND_DELETE);
 
-        PerformanceTracker.displayOperationTime(timeStart, "пошук за ключем в Hashtable");
+        PerformanceTracker.displayOperationTime(timeStart, "пошук за ключем в HashMap");
 
         if (found) {
             String value = hashtable.get(KEY_TO_SEARCH_AND_DELETE);
             System.out.println("Елемент з ключем '" + KEY_TO_SEARCH_AND_DELETE + "' знайдено. Власник: " + value);
         } else {
-            System.out.println("Елемент з ключем '" + KEY_TO_SEARCH_AND_DELETE + "' відсутній в Hashtable.");
+            System.out.println("Елемент з ключем '" + KEY_TO_SEARCH_AND_DELETE + "' відсутній в HashMap.");
         }
     }
 
     /**
-     * Здійснює пошук елемента за значенням в Hashtable.
+     * Здійснює пошук елемента за значенням в HashMap.
      * Сортує список Map.Entry за значеннями та використовує бінарний пошук.
      */
-    void findByValueInHashtable() {
+    void findByValueInHashMap() {
         long timeStart = System.nanoTime();
 
         // Створюємо список Entry та сортуємо за значеннями
@@ -386,38 +330,38 @@ public class BasicDataOperationUsingMap {
 
         int position = Collections.binarySearch(entries, searchEntry, comparator);
 
-        PerformanceTracker.displayOperationTime(timeStart, "бінарний пошук за значенням в Hashtable");
+        PerformanceTracker.displayOperationTime(timeStart, "бінарний пошук за значенням в HashMap");
 
         if (position >= 0) {
             Map.Entry<Parrot, String> foundEntry = entries.get(position);
             System.out.println("Власника '" + VALUE_TO_SEARCH_AND_DELETE + "' знайдено. Parrot: " + foundEntry.getKey());
         } else {
-            System.out.println("Власник '" + VALUE_TO_SEARCH_AND_DELETE + "' відсутній в Hashtable.");
+            System.out.println("Власник '" + VALUE_TO_SEARCH_AND_DELETE + "' відсутній в HashMap.");
         }
     }
 
     /**
-     * Додає новий запис до Hashtable.
+     * Додає новий запис до HashMap.
      */
-    void addEntryToHashtable() {
+    void addEntryToHashMap() {
         long timeStart = System.nanoTime();
 
         hashtable.put(KEY_TO_ADD, VALUE_TO_ADD);
 
-        PerformanceTracker.displayOperationTime(timeStart, "додавання запису до Hashtable");
+        PerformanceTracker.displayOperationTime(timeStart, "додавання запису до HashMap");
 
         System.out.println("Додано новий запис: Parrot='" + KEY_TO_ADD + "', власник='" + VALUE_TO_ADD + "'");
     }
 
     /**
-     * Видаляє запис з Hashtable за ключем.
+     * Видаляє запис з HashMap за ключем.
      */
-    void removeByKeyFromHashtable() {
+    void removeByKeyFromHashMap() {
         long timeStart = System.nanoTime();
 
         String removedValue = hashtable.remove(KEY_TO_SEARCH_AND_DELETE);
 
-        PerformanceTracker.displayOperationTime(timeStart, "видалення за ключем з Hashtable");
+        PerformanceTracker.displayOperationTime(timeStart, "видалення за ключем з HashMap");
 
         if (removedValue != null) {
             System.out.println("Видалено запис з ключем '" + KEY_TO_SEARCH_AND_DELETE + "'. Власник був: " + removedValue);
@@ -427,9 +371,9 @@ public class BasicDataOperationUsingMap {
     }
 
     /**
-     * Видаляє записи з Hashtable за значенням.
+     * Видаляє записи з HashMap за значенням.
      */
-    void removeByValueFromHashtable() {
+    void removeByValueFromHashMap() {
         long timeStart = System.nanoTime();
 
         List<Parrot> keysToRemove = new ArrayList<>();
@@ -443,52 +387,51 @@ public class BasicDataOperationUsingMap {
             hashtable.remove(key);
         }
 
-        PerformanceTracker.displayOperationTime(timeStart, "видалення за значенням з Hashtable");
+        PerformanceTracker.displayOperationTime(timeStart, "видалення за значенням з HashMap");
 
         System.out.println("Видалено " + keysToRemove.size() + " записів з власником '" + VALUE_TO_SEARCH_AND_DELETE + "'");
     }
 
-    // ===== Методи для TreeMap =====
+    // ===== Методи для LinkedHashMap =====
 
     /**
-     * Виводить вміст TreeMap.
-     * TreeMap автоматично відсортована за ключами (Parrot nickname за зростанням, species за спаданням).
+     * Виводить вміст LinkedHashMap.
+     * LinkedHashMap зберігає порядок вставки ключів.
      */
-    private void printTreeMap() {
-        System.out.println("\n=== Пари ключ-значення в TreeMap ===");
+    private void printLinkedHashMap() {
+        System.out.println("\n=== Пари ключ-значення в LinkedHashMap ===");
 
         long timeStart = System.nanoTime();
         for (Map.Entry<Parrot, String> entry : treeMap.entrySet()) {
             System.out.println("  " + entry.getKey() + " -> " + entry.getValue());
         }
 
-        PerformanceTracker.displayOperationTime(timeStart, "виведення пар ключ-значення в TreeMap");
+        PerformanceTracker.displayOperationTime(timeStart, "виведення пар ключ-значення в LinkedHashMap");
     }
 
     /**
-     * Здійснює пошук елемента за ключем в TreeMap.
-     * Використовує Parrot.compareTo() для навігації по дереву.
+     * Здійснює пошук елемента за ключем в LinkedHashMap.
      */
-    void findByKeyInTreeMap() {
+    void findByKeyInLinkedHashMap() {
         long timeStart = System.nanoTime();
 
         boolean found = treeMap.containsKey(KEY_TO_SEARCH_AND_DELETE);
 
-        PerformanceTracker.displayOperationTime(timeStart, "пошук за ключем в TreeMap");
+        PerformanceTracker.displayOperationTime(timeStart, "пошук за ключем в LinkedHashMap");
 
         if (found) {
             String value = treeMap.get(KEY_TO_SEARCH_AND_DELETE);
             System.out.println("Елемент з ключем '" + KEY_TO_SEARCH_AND_DELETE + "' знайдено. Власник: " + value);
         } else {
-            System.out.println("Елемент з ключем '" + KEY_TO_SEARCH_AND_DELETE + "' відсутній в TreeMap.");
+            System.out.println("Елемент з ключем '" + KEY_TO_SEARCH_AND_DELETE + "' відсутній в LinkedHashMap.");
         }
     }
 
     /**
-     * Здійснює пошук елемента за значенням в TreeMap.
+     * Здійснює пошук елемента за значенням в LinkedHashMap.
      * Сортує список Map.Entry за значеннями та використовує бінарний пошук.
      */
-    void findByValueInTreeMap() {
+    void findByValueInLinkedHashMap() {
         long timeStart = System.nanoTime();
 
         // Створюємо список Entry та сортуємо за значеннями
@@ -505,38 +448,38 @@ public class BasicDataOperationUsingMap {
 
         int position = Collections.binarySearch(entries, searchEntry, comparator);
 
-        PerformanceTracker.displayOperationTime(timeStart, "бінарний пошук за значенням в TreeMap");
+        PerformanceTracker.displayOperationTime(timeStart, "бінарний пошук за значенням в LinkedHashMap");
 
         if (position >= 0) {
             Map.Entry<Parrot, String> foundEntry = entries.get(position);
             System.out.println("Власника '" + VALUE_TO_SEARCH_AND_DELETE + "' знайдено. Parrot: " + foundEntry.getKey());
         } else {
-            System.out.println("Власник '" + VALUE_TO_SEARCH_AND_DELETE + "' відсутній в TreeMap.");
+            System.out.println("Власник '" + VALUE_TO_SEARCH_AND_DELETE + "' відсутній в LinkedHashMap.");
         }
     }
 
     /**
-     * Додає новий запис до TreeMap.
+     * Додає новий запис до LinkedHashMap.
      */
-    void addEntryToTreeMap() {
+    void addEntryToLinkedHashMap() {
         long timeStart = System.nanoTime();
 
         treeMap.put(KEY_TO_ADD, VALUE_TO_ADD);
 
-        PerformanceTracker.displayOperationTime(timeStart, "додавання запису до TreeMap");
+        PerformanceTracker.displayOperationTime(timeStart, "додавання запису до LinkedHashMap");
 
         System.out.println("Додано новий запис: Parrot='" + KEY_TO_ADD + "', власник='" + VALUE_TO_ADD + "'");
     }
 
     /**
-     * Видаляє запис з TreeMap за ключем.
+     * Видаляє запис з LinkedHashMap за ключем.
      */
-    void removeByKeyFromTreeMap() {
+    void removeByKeyFromLinkedHashMap() {
         long timeStart = System.nanoTime();
 
         String removedValue = treeMap.remove(KEY_TO_SEARCH_AND_DELETE);
 
-        PerformanceTracker.displayOperationTime(timeStart, "видалення за ключем з TreeMap");
+        PerformanceTracker.displayOperationTime(timeStart, "видалення за ключем з LinkedHashMap");
 
         if (removedValue != null) {
             System.out.println("Видалено запис з ключем '" + KEY_TO_SEARCH_AND_DELETE + "'. Власник був: " + removedValue);
@@ -546,9 +489,9 @@ public class BasicDataOperationUsingMap {
     }
 
     /**
-     * Видаляє записи з TreeMap за значенням.
+     * Видаляє записи з LinkedHashMap за значенням.
      */
-    void removeByValueFromTreeMap() {
+    void removeByValueFromLinkedHashMap() {
         long timeStart = System.nanoTime();
 
         List<Parrot> keysToRemove = new ArrayList<>();
@@ -562,7 +505,7 @@ public class BasicDataOperationUsingMap {
             treeMap.remove(key);
         }
 
-        PerformanceTracker.displayOperationTime(timeStart, "видалення за значенням з TreeMap");
+        PerformanceTracker.displayOperationTime(timeStart, "видалення за значенням з LinkedHashMap");
 
         System.out.println("Видалено " + keysToRemove.size() + " записів з власником '" + VALUE_TO_SEARCH_AND_DELETE + "'");
     }
