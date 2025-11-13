@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 
 /**
  * Клас BasicDataOperationUsingMap реалізує операції з колекціями типу Map для зберігання пар ключ-значення.
@@ -28,8 +28,8 @@ public class BasicDataOperationUsingMap {
     private final String VALUE_TO_SEARCH_AND_DELETE = "Олена";
     private final String VALUE_TO_ADD = "Богдан";
 
-    private Hashtable<Parrot, String> hashtable;
-    private TreeMap<Parrot, String> treeMap;
+    private HashMap<Parrot, String> hashtable;
+    private LinkedHashMap<Parrot, String> treeMap;
 
     /**
      * Компаратор для сортування Map.Entry за значеннями String.
@@ -184,10 +184,10 @@ public class BasicDataOperationUsingMap {
     /**
      * Конструктор, який ініціалізує об'єкт з готовими даними.
      * 
-     * @param hashtable Hashtable з початковими даними (ключ: Parrot, значення: ім'я власника)
-     * @param treeMap TreeMap з початковими даними (ключ: Parrot, значення: ім'я власника)
+    * @param hashtable HashMap з початковими даними (ключ: Parrot, значення: ім'я власника)
+    * @param treeMap LinkedHashMap з початковими даними (ключ: Parrot, значення: ім'я власника)
      */
-    BasicDataOperationUsingMap(Hashtable<Parrot, String> hashtable, TreeMap<Parrot, String> treeMap) {
+    BasicDataOperationUsingMap(HashMap<Parrot, String> hashtable, LinkedHashMap<Parrot, String> treeMap) {
         this.hashtable = hashtable;
         this.treeMap = treeMap;
     }
@@ -198,17 +198,17 @@ public class BasicDataOperationUsingMap {
      * Метод виконує різноманітні операції з Map: пошук, додавання, видалення та сортування.
      */
     public void executeDataOperations() {
-        // Спочатку працюємо з Hashtable
-        System.out.println("========= Операції з Hashtable =========");
-        System.out.println("Початковий розмір Hashtable: " + hashtable.size());
+        // Спочатку працюємо з HashMap
+        System.out.println("========= Операції з HashMap =========");
+        System.out.println("Початковий розмір HashMap: " + hashtable.size());
         
         // Пошук до сортування
         findByKeyInHashtable();
         findByValueInHashtable();
 
-        printHashtable();
-        sortHashtable();
-        printHashtable();
+        printHashMap();
+        sortHashMap();
+        printHashMap();
 
         // Пошук після сортування
         findByKeyInHashtable();
@@ -219,11 +219,11 @@ public class BasicDataOperationUsingMap {
         removeByKeyFromHashtable();
         removeByValueFromHashtable();
                
-        System.out.println("Кінцевий розмір Hashtable: " + hashtable.size());
+        System.out.println("Кінцевий розмір HashMap: " + hashtable.size());
 
-        // Потім обробляємо TreeMap
-        System.out.println("\n\n========= Операції з TreeMap =========");
-        System.out.println("Початковий розмір TreeMap: " + treeMap.size());
+        // Потім обробляємо LinkedHashMap (раніше TreeMap)
+        System.out.println("\n\n========= Операції з LinkedHashMap (раніше TreeMap) =========");
+        System.out.println("Початковий розмір LinkedHashMap: " + treeMap.size());
         
         findByKeyInTreeMap();
         findByValueInTreeMap();
@@ -235,7 +235,7 @@ public class BasicDataOperationUsingMap {
         removeByKeyFromTreeMap();
         removeByValueFromTreeMap();
         
-        System.out.println("Кінцевий розмір TreeMap: " + treeMap.size());
+        System.out.println("Кінцевий розмір LinkedHashMap: " + treeMap.size());
     }
 
 
@@ -245,15 +245,15 @@ public class BasicDataOperationUsingMap {
      * Виводить вміст Hashtable без сортування.
      * Hashtable не гарантує жодного порядку елементів.
      */
-    private void printHashtable() {
-        System.out.println("\n=== Пари ключ-значення в Hashtable ===");
+    private void printHashMap() {
+        System.out.println("\n=== Пари ключ-значення в HashMap ===");
         long timeStart = System.nanoTime();
 
         for (Map.Entry<Parrot, String> entry : hashtable.entrySet()) {
             System.out.println("  " + entry.getKey() + " -> " + entry.getValue());
         }
 
-        PerformanceTracker.displayOperationTime(timeStart, "виведення пари ключ-значення в Hashtable");
+        PerformanceTracker.displayOperationTime(timeStart, "виведення пари ключ-значення в HashMap");
     }
 
     /**
@@ -261,23 +261,23 @@ public class BasicDataOperationUsingMap {
      * Використовує Collections.sort() з природним порядком Parrot (Parrot.compareTo()).
      * Перезаписує hashtable відсортованими даними.
      */
-    private void sortHashtable() {
+    private void sortHashMap() {
         long timeStart = System.nanoTime();
 
         // Створюємо список ключів і сортуємо за природним порядком Parrot
         List<Parrot> sortedKeys = new ArrayList<>(hashtable.keySet());
         Collections.sort(sortedKeys);
-        
-        // Створюємо нову Hashtable з відсортованими ключами
-        Hashtable<Parrot, String> sortedHashtable = new Hashtable<>();
-        for (Parrot key : sortedKeys) {
-            sortedHashtable.put(key, hashtable.get(key));
-        }
-        
-        // Перезаписуємо оригінальну hashtable
-        hashtable = sortedHashtable;
 
-        PerformanceTracker.displayOperationTime(timeStart, "сортування Hashtable за ключами");
+        // Створюємо LinkedHashMap з відсортованими ключами для збереження порядку вставки
+        LinkedHashMap<Parrot, String> sortedMap = new LinkedHashMap<>();
+        for (Parrot key : sortedKeys) {
+            sortedMap.put(key, hashtable.get(key));
+        }
+
+        // Перезаписуємо оригінальну hashtable, використовуючи новий HashMap з порядком з sortedMap
+        hashtable = new HashMap<>(sortedMap);
+
+        PerformanceTracker.displayOperationTime(timeStart, "сортування HashMap за ключами (через LinkedHashMap)");
     }
 
     /**
@@ -506,29 +506,29 @@ public class BasicDataOperationUsingMap {
      */
     public static void main(String[] args) {
         // Створюємо початкові дані (ключ: Parrot, значення: ім'я власника)
-        Hashtable<Parrot, String> hashtable = new Hashtable<>();
-        hashtable.put(new Parrot("Шурик", "Ара"), "Андрій");
+        HashMap<Parrot, String> hashtable = new HashMap<>();
+        hashtable.put(new Parrot("Шурик", "Ара"), "Артем");
         hashtable.put(new Parrot("Чижик", "Жако"), "Ірина");
-        hashtable.put(new Parrot("Цізар", "Корела"), "Олена");
-        hashtable.put(new Parrot("Чижик", "Лорі"), "Олена");
-        hashtable.put(new Parrot("Фенікс", "Амазон"), "Ірина");
-        hashtable.put(new Parrot("Умка", "Какаду"), "Андрій");
-        hashtable.put(new Parrot("Тіма", "Еклектус"), "Тимофій");
-        hashtable.put(new Parrot("Соня", "Нестор"), "Поліна");
-        hashtable.put(new Parrot("Ромка", "Ара"), "Стефанія");
-        hashtable.put(new Parrot("Пірат", "Волнистий"), "Ярослав");
+        hashtable.put(new Parrot("Цізар", "Корела"), "Діана");
+        hashtable.put(new Parrot("Чижик", "Лорі"), "Єва");
+        hashtable.put(new Parrot("Фенікс", "Амазон"), "Захар");
+        hashtable.put(new Parrot("Умка", "Какаду"), "Інна");
+        hashtable.put(new Parrot("Тіма", "Еклектус"), "Єва");
+        hashtable.put(new Parrot("Соня", "Нестор"), "Костя");
+        hashtable.put(new Parrot("Ромка", "Ара"), "Лілія");
+        hashtable.put(new Parrot("Пірат", "Волнистий"), "Інна");
 
-        TreeMap<Parrot, String> treeMap = new TreeMap<Parrot, String>() {{
-            put(new Parrot("Тум", "Сова вухата"), "Андрій");
-            put(new Parrot("Луна", "Полярна сова"), "Ірина");
-            put(new Parrot("Барсик", "Сова сіра"), "Олена");
-            put(new Parrot("Боні", "Сипуха"), "Олена");
-            put(new Parrot("Тайсон", "Сова болотяна"), "Ірина");
-            put(new Parrot("Барсик", "Сичик-горобець"), "Андрій");
-            put(new Parrot("Ґуфі", "Сова болотяна"), "Тимофій");
-            put(new Parrot("Боні", "Сова яструбина"), "Поліна");
-            put(new Parrot("Муся", "Сова білолиця"), "Стефанія");
-            put(new Parrot("Чіпо", "Сичик-хатник"), "Ярослав");
+        LinkedHashMap<Parrot, String> treeMap = new LinkedHashMap<>() {{
+            put(new Parrot("Шурик", "Ара"), "Артем");
+            put(new Parrot("Чижик", "Жако"), "Віктор");
+            put(new Parrot("Цізар", "Корела"), "Діана");
+            put(new Parrot("Чижик", "Лорі"), "Єва");
+            put(new Parrot("Фенікс", "Амазон"), "Захар");
+            put(new Parrot("Умка", "Какаду"), "Інна");
+            put(new Parrot("Тіма", "Еклектус"), "Єва");
+            put(new Parrot("Соня", "Нестор"), "Костя");
+            put(new Parrot("Ромка", "Ара"), "Лілія");
+            put(new Parrot("Пірат", "Волнистий"), "Інна");
         }};
 
         // Створюємо об'єкт і виконуємо операції
