@@ -25,7 +25,7 @@ public class BasicDataOperationUsingMap {
     private final Parrot KEY_TO_SEARCH_AND_DELETE = new Parrot("Луна", "Полярна сова");
     private final Parrot KEY_TO_ADD = new Parrot("Кір", "Сова вухата");
 
-    private final String VALUE_TO_SEARCH_AND_DELETE = "Олена";
+    private final String VALUE_TO_SEARCH_AND_DELETE = "Єва";
     private final String VALUE_TO_ADD = "Богдан";
 
     private HashMap<Parrot, String> hashtable;
@@ -51,7 +51,7 @@ public class BasicDataOperationUsingMap {
      * Внутрішній клас Parrot для зберігання інформації про домашню тварину.
      * 
      * Реалізує Comparable<Parrot> для визначення природного порядку сортування.
-     * Природний порядок: спочатку за кличкою (nickname) за зростанням, потім за видом (species) за спаданням.
+    * Природний порядок: спочатку за кличкою (nickname) за спаданням, потім за видом (species) за зростанням.
      */
     public static class Parrot implements Comparable<Parrot> {
         private final String nickname;
@@ -95,28 +95,30 @@ public class BasicDataOperationUsingMap {
         public int compareTo(Parrot other) {
             if (other == null) return 1;
             
-            // Спочатку порівнюємо за кличкою (за зростанням)
+            // Спочатку порівнюємо за кличкою (за спаданням)
             int nicknameComparison = 0;
             if (this.nickname == null && other.nickname == null) {
                 nicknameComparison = 0;
             } else if (this.nickname == null) {
-                nicknameComparison = -1;
-            } else if (other.nickname == null) {
+                // null вважаємо найменшим при спаданні, тобто буде в кінці
                 nicknameComparison = 1;
+            } else if (other.nickname == null) {
+                nicknameComparison = -1;
             } else {
-                nicknameComparison = this.nickname.compareTo(other.nickname);
+                // Інвертуємо природне порівняння для отримання спадного порядку
+                nicknameComparison = other.nickname.compareTo(this.nickname);
             }
-            
+
             // Якщо клички різні, повертаємо результат
             if (nicknameComparison != 0) {
                 return nicknameComparison;
             }
-            
-            // Якщо клички однакові, порівнюємо за видом (за спаданням - інвертуємо результат)
+
+            // Якщо клички однакові, порівнюємо за видом (за зростанням)
             if (this.species == null && other.species == null) return 0;
-            if (this.species == null) return 1;  // null йде в кінець при спаданні
-            if (other.species == null) return -1;
-            return other.species.compareTo(this.species);  // Інвертоване порівняння для спадання
+            if (this.species == null) return -1;  // null йде в кінець при зростанні
+            if (other.species == null) return 1;
+            return this.species.compareTo(other.species);
         }
 
         /**
