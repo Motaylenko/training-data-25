@@ -71,7 +71,7 @@ public class BasicDataOperationUsingSet {
 
         Arrays.sort(doubleArray);
 
-        PerformanceTracker.displayOperationTime(timeStart, "упорядкування масиву дати i часу");
+        PerformanceTracker.displayOperationTime(timeStart, "упорядкування масиву дійсного числа");
     }
 
     /**
@@ -82,7 +82,7 @@ public class BasicDataOperationUsingSet {
 
         int position = Arrays.binarySearch(this.doubleArray, doubleValueToSearch);
 
-        PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в масивi дати i часу");
+        PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в масивi дійсного числа");
 
         if (position >= 0) {
             System.out.println("Елемент '" + doubleValueToSearch + "' знайдено в масивi за позицією: " + position);
@@ -128,7 +128,7 @@ public class BasicDataOperationUsingSet {
 
         boolean elementExists = this.doubleSet.contains(doubleValueToSearch);
 
-        PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в LinkedHashSet дати i часу");
+        PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в LinkedHashSet дійсного числа");
 
         if (elementExists) {
             System.out.println("Елемент '" + doubleValueToSearch + "' знайдено в LinkedHashSet");

@@ -78,7 +78,7 @@ public class BasicDataOperationUsingList {
 
         Arrays.sort(doubleArray);
 
-        PerformanceTracker.displayOperationTime(timeStart, "упорядкування масиву дати i часу");
+        PerformanceTracker.displayOperationTime(timeStart, "упорядкування масиву дійсного числа");
     }
 
     /**
@@ -89,7 +89,7 @@ public class BasicDataOperationUsingList {
 
         int position = Arrays.binarySearch(this.doubleArray, doubleValueToSearch);
 
-        PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в масивi дати i часу");
+        PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в масивi дійсного числа");
 
         if (position >= 0) {
             System.out.println("Елемент '" + doubleValueToSearch + "' знайдено в масивi за позицією: " + position);
@@ -135,7 +135,7 @@ public class BasicDataOperationUsingList {
 
         int position = Collections.binarySearch(this.doubleList, doubleValueToSearch);
 
-        PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в List дати i часу");        
+        PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в List дійсного числа");        
 
         if (position >= 0) {
             System.out.println("Елемент '" + doubleValueToSearch + "' знайдено в ArrayList за позицією: " + position);
@@ -173,6 +173,6 @@ public class BasicDataOperationUsingList {
 
         Collections.sort(doubleList);
 
-        PerformanceTracker.displayOperationTime(timeStart, "упорядкування ArrayList дати i часу");
+        PerformanceTracker.displayOperationTime(timeStart, "упорядкування ArrayList дійсного числа");
     }
 }
