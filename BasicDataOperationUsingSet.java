@@ -19,22 +19,22 @@ import java.util.Set;
  * </ul>
  */
 public class BasicDataOperationUsingSet {
-    private double dateTimeValueToSearch;
-    private Double[] dateTimeArray;
-    private Set<Double> dateTimeSet;
+    private double doubleValueToSearch;
+    private Double[] doubleArray;
+    private Set<Double> doubleSet;
 
     /**
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
      * 
-     * @param dateTimeValueToSearch Значення для пошуку
-     * @param dateTimeArray Масив числових даних
+     * @param doubleValueToSearch Значення для пошуку
+     * @param doubleArray Масив числових даних
      */
-    BasicDataOperationUsingSet(double dateTimeValueToSearch, Double[] dateTimeArray) {
-        this.dateTimeValueToSearch = dateTimeValueToSearch;
-        this.dateTimeArray = dateTimeArray.clone();
-        this.dateTimeSet = new HashSet<>();
-        for (double value : dateTimeArray) {
-            this.dateTimeSet.add(value);
+    BasicDataOperationUsingSet(double doubleValueToSearch, Double[] doubleArray) {
+        this.doubleValueToSearch = doubleValueToSearch;
+        this.doubleArray = doubleArray.clone();
+        this.doubleSet = new HashSet<>();
+        for (double value : doubleArray) {
+            this.doubleSet.add(value);
         }
     }
     
@@ -44,7 +44,7 @@ public class BasicDataOperationUsingSet {
      * Метод завантажує дані, виконує операції з множиною та масивом чисел.
      */
     public void executeDataAnalysis() {
-        // спочатку аналізуємо множину дати та часу
+        // спочатку аналізуємо множину дійсного числа
         findInSet();
         locateMinMaxInSet();
         analyzeArrayAndSet();
@@ -59,7 +59,7 @@ public class BasicDataOperationUsingSet {
         locateMinMaxInArray();
 
         // зберігаємо відсортований масив до файлу
-        DataFileHandler.writeArrayToFile(dateTimeArray, BasicDataOperation.PATH_TO_DATA_FILE + ".sorted");
+        DataFileHandler.writeArrayToFile(doubleArray, BasicDataOperation.PATH_TO_DATA_FILE + ".sorted");
     }
 
     /**
@@ -69,25 +69,25 @@ public class BasicDataOperationUsingSet {
     private void performArraySorting() {
         long timeStart = System.nanoTime();
 
-        Arrays.sort(dateTimeArray);
+        Arrays.sort(doubleArray);
 
         PerformanceTracker.displayOperationTime(timeStart, "упорядкування масиву дати i часу");
     }
 
     /**
-     * Здійснює пошук конкретного значення в масиві дати та часу.
+     * Здійснює пошук конкретного значення в масиві дійсного числа.
      */
     private void findInArray() {
         long timeStart = System.nanoTime();
 
-        int position = Arrays.binarySearch(this.dateTimeArray, dateTimeValueToSearch);
+        int position = Arrays.binarySearch(this.doubleArray, doubleValueToSearch);
 
         PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в масивi дати i часу");
 
         if (position >= 0) {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' знайдено в масивi за позицією: " + position);
+            System.out.println("Елемент '" + doubleValueToSearch + "' знайдено в масивi за позицією: " + position);
         } else {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' відсутній в масиві.");
+            System.out.println("Елемент '" + doubleValueToSearch + "' відсутній в масиві.");
         }
     }
 
@@ -95,17 +95,17 @@ public class BasicDataOperationUsingSet {
      * Визначає найменше та найбільше значення в масиві чисел.
      */
     private void locateMinMaxInArray() {
-        if (dateTimeArray == null || dateTimeArray.length == 0) {
+        if (doubleArray == null || doubleArray.length == 0) {
             System.out.println("Масив є пустим або не ініціалізованим.");
             return;
         }
 
         long timeStart = System.nanoTime();
 
-        double minValue = dateTimeArray[0];
-        double maxValue = dateTimeArray[0];
+        double minValue = doubleArray[0];
+        double maxValue = doubleArray[0];
 
-        for (double currentValue : dateTimeArray) {
+        for (double currentValue : doubleArray) {
             if (currentValue < minValue) {
                 minValue = currentValue;
             }
@@ -121,19 +121,19 @@ public class BasicDataOperationUsingSet {
     }
 
     /**
-     * Здійснює пошук конкретного значення в множині дати та часу.
+     * Здійснює пошук конкретного значення в множині дійсного числа.
      */
     private void findInSet() {
         long timeStart = System.nanoTime();
 
-        boolean elementExists = this.dateTimeSet.contains(dateTimeValueToSearch);
+        boolean elementExists = this.doubleSet.contains(doubleValueToSearch);
 
         PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в LinkedHashSet дати i часу");
 
         if (elementExists) {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' знайдено в LinkedHashSet");
+            System.out.println("Елемент '" + doubleValueToSearch + "' знайдено в LinkedHashSet");
         } else {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' відсутній в LinkedHashSet.");
+            System.out.println("Елемент '" + doubleValueToSearch + "' відсутній в LinkedHashSet.");
         }
     }
 
@@ -141,15 +141,15 @@ public class BasicDataOperationUsingSet {
      * Визначає найменше та найбільше значення в множині чисел.
      */
     private void locateMinMaxInSet() {
-        if (dateTimeSet == null || dateTimeSet.isEmpty()) {
+        if (doubleSet == null || doubleSet.isEmpty()) {
             System.out.println("LinkedHashSet є пустим або не ініціалізованим.");
             return;
         }
 
         long timeStart = System.nanoTime();
 
-        double minValue = Collections.min(dateTimeSet);
-        double maxValue = Collections.max(dateTimeSet);
+        double minValue = Collections.min(doubleSet);
+        double maxValue = Collections.max(doubleSet);
 
         PerformanceTracker.displayOperationTime(timeStart, "визначення мiнiмальної i максимальної дати в LinkedHashSet");
 
@@ -161,12 +161,12 @@ public class BasicDataOperationUsingSet {
      * Аналізує та порівнює елементи масиву та множини.
      */
     private void analyzeArrayAndSet() {
-        System.out.println("Кiлькiсть елементiв в масивi: " + dateTimeArray.length);
-        System.out.println("Кiлькiсть елементiв в LinkedHashSet: " + dateTimeSet.size());
+        System.out.println("Кiлькiсть елементiв в масивi: " + doubleArray.length);
+        System.out.println("Кiлькiсть елементiв в LinkedHashSet: " + doubleSet.size());
 
         boolean allElementsPresent = true;
-        for (double value : dateTimeArray) {
-            if (!dateTimeSet.contains(value)) {
+        for (double value : doubleArray) {
+            if (!doubleSet.contains(value)) {
                 allElementsPresent = false;
                 break;
             }

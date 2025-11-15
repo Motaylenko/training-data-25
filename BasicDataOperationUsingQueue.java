@@ -20,25 +20,25 @@ import java.util.PriorityQueue;
  * 
  */
 public class BasicDataOperationUsingQueue {
-    private double dateTimeValueToSearch;
-    private Double[] dateTimeArray;
-    private Queue<Double> dateTimeQueue;
+    private double doubleValueToSearch;
+    private Double[] doubleArray;
+    private Queue<Double> doubleQueue;
 
     /**
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
      * 
-     * @param dateTimeValueToSearch Значення для пошуку
-     * @param dateTimeArray Масив числових даних
+     * @param doubleValueToSearch Значення для пошуку
+     * @param doubleArray Масив числових даних
      */
-    BasicDataOperationUsingQueue(double dateTimeValueToSearch, Double[] dateTimeArray) {
+    BasicDataOperationUsingQueue(double doubleValueToSearch, Double[] doubleArray) {
         // Перетворюємо рядок в число
-        this.dateTimeValueToSearch = dateTimeValueToSearch;
-        this.dateTimeArray = dateTimeArray.clone();
+        this.doubleValueToSearch = doubleValueToSearch;
+        this.doubleArray = doubleArray.clone();
         
         // Ініціалізуємо чергу з масиву double
-        this.dateTimeQueue = new PriorityQueue<>();
-        for (double value : dateTimeArray) {
-            this.dateTimeQueue.add(value);
+        this.doubleQueue = new PriorityQueue<>();
+        for (double value : doubleArray) {
+            this.doubleQueue.add(value);
         }
     }
     
@@ -48,7 +48,7 @@ public class BasicDataOperationUsingQueue {
      * Метод завантажує дані, виконує операції з чергою та масивом чисел.
      */
     public void runDataProcessing() {
-        // спочатку обробляємо чергу дати та часу
+        // спочатку обробляємо чергу дійсного числа
         findInQueue();
         locateMinMaxInQueue();
         performQueueOperations();
@@ -63,7 +63,7 @@ public class BasicDataOperationUsingQueue {
         locateMinMaxInArray();
 
         // зберігаємо відсортований масив до файлу
-        DataFileHandler.writeArrayToFile(dateTimeArray, BasicDataOperation.PATH_TO_DATA_FILE + ".sorted");
+        DataFileHandler.writeArrayToFile(doubleArray, BasicDataOperation.PATH_TO_DATA_FILE + ".sorted");
     }
 
     /**
@@ -71,29 +71,29 @@ public class BasicDataOperationUsingQueue {
      * Вимiрює та виводить час, витрачений на сортування масиву в наносекундах.
      */
     private void performArraySorting() {
-        // вимірюємо тривалість упорядкування масиву дати та часу
+        // вимірюємо тривалість упорядкування масиву дійсного числа
         long timeStart = System.nanoTime();
 
-        Arrays.sort(dateTimeArray);
+        Arrays.sort(doubleArray);
 
         PerformanceTracker.displayOperationTime(timeStart, "упорядкування масиву дати i часу");
     }
 
     /**
-     * Здійснює пошук конкретного значення в масиві дати та часу.
+     * Здійснює пошук конкретного значення в масиві дійсного числа.
      */
     private void findInArray() {
         // відстежуємо час виконання пошуку в масиві
         long timeStart = System.nanoTime();
         
-        int position = Arrays.binarySearch(this.dateTimeArray, dateTimeValueToSearch);
+        int position = Arrays.binarySearch(this.doubleArray, doubleValueToSearch);
         
         PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в масивi дати i часу");
 
         if (position >= 0) {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' знайдено в масивi за позицією: " + position);
+            System.out.println("Елемент '" + doubleValueToSearch + "' знайдено в масивi за позицією: " + position);
         } else {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' відсутній в масиві.");
+            System.out.println("Елемент '" + doubleValueToSearch + "' відсутній в масиві.");
         }
     }
 
@@ -101,7 +101,7 @@ public class BasicDataOperationUsingQueue {
      * Визначає найменше та найбільше значення в масиві чисел.
      */
     private void locateMinMaxInArray() {
-        if (dateTimeArray == null || dateTimeArray.length == 0) {
+        if (doubleArray == null || doubleArray.length == 0) {
             System.out.println("Масив є пустим або не ініціалізованим.");
             return;
         }
@@ -109,10 +109,10 @@ public class BasicDataOperationUsingQueue {
         // відстежуємо час на визначення граничних значень
         long timeStart = System.nanoTime();
 
-        double minValue = dateTimeArray[0];
-        double maxValue = dateTimeArray[0];
+        double minValue = doubleArray[0];
+        double maxValue = doubleArray[0];
 
-        for (double currentValue : dateTimeArray) {
+        for (double currentValue : doubleArray) {
             if (currentValue < minValue) {
                 minValue = currentValue;
             }
@@ -128,20 +128,20 @@ public class BasicDataOperationUsingQueue {
     }
 
     /**
-     * Здійснює пошук конкретного значення в черзі дати та часу.
+     * Здійснює пошук конкретного значення в черзі дійсного числа.
      */
     private void findInQueue() {
         // вимірюємо час пошуку в черзі
         long timeStart = System.nanoTime();
 
-        boolean elementExists = this.dateTimeQueue.contains(dateTimeValueToSearch);
+        boolean elementExists = this.doubleQueue.contains(doubleValueToSearch);
 
         PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в Queue дати i часу");
 
         if (elementExists) {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' знайдено в Queue");
+            System.out.println("Елемент '" + doubleValueToSearch + "' знайдено в Queue");
         } else {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' відсутній в Queue.");
+            System.out.println("Елемент '" + doubleValueToSearch + "' відсутній в Queue.");
         }
     }
 
@@ -149,7 +149,7 @@ public class BasicDataOperationUsingQueue {
      * Визначає найменше та найбільше значення в черзі чисел.
      */
     private void locateMinMaxInQueue() {
-        if (dateTimeQueue == null || dateTimeQueue.isEmpty()) {
+        if (doubleQueue == null || doubleQueue.isEmpty()) {
             System.out.println("Черга є пустою або не ініціалізованою.");
             return;
         }
@@ -157,8 +157,8 @@ public class BasicDataOperationUsingQueue {
         // відстежуємо час пошуку граничних значень
         long timeStart = System.nanoTime();
 
-        double minValue = Collections.min(dateTimeQueue);
-        double maxValue = Collections.max(dateTimeQueue);
+        double minValue = Collections.min(doubleQueue);
+        double maxValue = Collections.max(doubleQueue);
 
         PerformanceTracker.displayOperationTime(timeStart, "визначення мiнiмальної i максимальної дати в Queue");
 
@@ -170,18 +170,18 @@ public class BasicDataOperationUsingQueue {
      * Виконує операції peek і poll з чергою чисел.
      */
     private void performQueueOperations() {
-        if (dateTimeQueue == null || dateTimeQueue.isEmpty()) {
+        if (doubleQueue == null || doubleQueue.isEmpty()) {
             System.out.println("Черга є пустою або не ініціалізованою.");
             return;
         }
 
-        double headElement = dateTimeQueue.peek();
+        double headElement = doubleQueue.peek();
         System.out.println("Головний елемент черги (peek): " + headElement);
 
-        headElement = dateTimeQueue.poll();
+        headElement = doubleQueue.poll();
         System.out.println("Видалений елемент черги (poll): " + headElement);
 
-        headElement = dateTimeQueue.peek();
+        headElement = doubleQueue.peek();
         System.out.println("Новий головний елемент черги: " + headElement);
     }
 }

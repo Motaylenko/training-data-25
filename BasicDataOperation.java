@@ -28,8 +28,8 @@
 public class BasicDataOperation {
     static final String PATH_TO_DATA_FILE = "list/double.data";
 
-    double dateTimeValueToSearch;
-    Double[] dateTimeArray;
+    double doubleValueToSearch;
+    Double[] doubleArray;
 
     private static final String SEPARATOR = "\n" + "=".repeat(80) + "\n";
     private static final String USAGE_MESSAGE = "Використання: java BasicDataOperation <пошукове-значення> \n" +
@@ -68,8 +68,8 @@ public class BasicDataOperation {
         System.out.println(SEPARATOR);
         
         // Підготовка даних
-        dateTimeValueToSearch = Double.parseDouble(args[0]);
-        dateTimeArray = DataFileHandler.loadArrayFromFile(PATH_TO_DATA_FILE);
+        doubleValueToSearch = Double.parseDouble(args[0]);
+        doubleArray = DataFileHandler.loadArrayFromFile(PATH_TO_DATA_FILE);
         
         runAllOperations();
 
@@ -89,7 +89,7 @@ public class BasicDataOperation {
         
         try {
             // Створення екземпляру класу з передаванням даних
-            BasicDataOperationUsingList listProcessor = new BasicDataOperationUsingList(dateTimeValueToSearch, dateTimeArray.clone());
+            BasicDataOperationUsingList listProcessor = new BasicDataOperationUsingList(doubleValueToSearch, doubleArray.clone());
             listProcessor.executeDataOperations();
         } catch (Exception e) {
             System.out.println("❌ Помилка при роботі з List: " + e.getMessage());
@@ -108,7 +108,7 @@ public class BasicDataOperation {
         
         try {
             // Створення екземпляру класу з передаванням даних
-            BasicDataOperationUsingQueue queueProcessor = new BasicDataOperationUsingQueue(dateTimeValueToSearch, dateTimeArray.clone());
+            BasicDataOperationUsingQueue queueProcessor = new BasicDataOperationUsingQueue(doubleValueToSearch, doubleArray.clone());
             queueProcessor.runDataProcessing();
         } catch (Exception e) {
             System.out.println("❌ Помилка при роботі з Queue: " + e.getMessage());
@@ -127,7 +127,7 @@ public class BasicDataOperation {
         
         try {
             // Створення екземпляру класу з передаванням даних           
-            BasicDataOperationUsingSet setProcessor = new BasicDataOperationUsingSet(dateTimeValueToSearch, dateTimeArray.clone());
+            BasicDataOperationUsingSet setProcessor = new BasicDataOperationUsingSet(doubleValueToSearch, doubleArray.clone());
             setProcessor.executeDataAnalysis();
         } catch (Exception e) {
             System.out.println("❌ Помилка при роботі з Set: " + e.getMessage());

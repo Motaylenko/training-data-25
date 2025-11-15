@@ -19,24 +19,24 @@ import java.util.List;
  * </ul>
  */
 public class BasicDataOperationUsingList {
-    private double dateTimeValueToSearch;
-    private Double[] dateTimeArray;
-    private List<Double> dateTimeList;
+    private double doubleValueToSearch;
+    private Double[] doubleArray;
+    private List<Double> doubleList;
 
     /**
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
      * 
-     * @param dateTimeValueToSearch Значення для пошуку
+     * @param doubleValueToSearch Значення для пошуку
      * @param numbersArray Масив чисел
      */
-    BasicDataOperationUsingList(double dateTimeValueToSearch, Double[] dateTimeArray) {
-        this.dateTimeValueToSearch = dateTimeValueToSearch;
-        this.dateTimeArray = dateTimeArray.clone();
-        this.dateTimeList = new LinkedList<>();
+    BasicDataOperationUsingList(double doubleValueToSearch, Double[] doubleArray) {
+        this.doubleValueToSearch = doubleValueToSearch;
+        this.doubleArray = doubleArray.clone();
+        this.doubleList = new LinkedList<>();
         
         // Заповнюємо список даними з масиву
-        for (double value : dateTimeArray) {
-            this.dateTimeList.add(value);
+        for (double value : doubleArray) {
+            this.doubleList.add(value);
         }
     }
     
@@ -56,7 +56,7 @@ public class BasicDataOperationUsingList {
         findInList();
         locateMinMaxInList();
 
-        // потім обробляємо масив дати та часу
+        // потім обробляємо масив дійсного числа
         findInArray();
         locateMinMaxInArray();
 
@@ -66,7 +66,7 @@ public class BasicDataOperationUsingList {
         locateMinMaxInArray();
 
         // зберігаємо відсортований масив до окремого файлу
-        DataFileHandler.writeArrayToFile(dateTimeArray, BasicDataOperation.PATH_TO_DATA_FILE + ".sorted");
+        DataFileHandler.writeArrayToFile(doubleArray, BasicDataOperation.PATH_TO_DATA_FILE + ".sorted");
     }
 
     /**
@@ -76,43 +76,43 @@ public class BasicDataOperationUsingList {
     void performArraySorting() {
         long timeStart = System.nanoTime();
 
-        Arrays.sort(dateTimeArray);
+        Arrays.sort(doubleArray);
 
         PerformanceTracker.displayOperationTime(timeStart, "упорядкування масиву дати i часу");
     }
 
     /**
-     * Здійснює пошук конкретного значення в масиві дати та часу.
+     * Здійснює пошук конкретного значення в масиві дійсного числа.
      */
     void findInArray() {
         long timeStart = System.nanoTime();
 
-        int position = Arrays.binarySearch(this.dateTimeArray, dateTimeValueToSearch);
+        int position = Arrays.binarySearch(this.doubleArray, doubleValueToSearch);
 
         PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в масивi дати i часу");
 
         if (position >= 0) {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' знайдено в масивi за позицією: " + position);
+            System.out.println("Елемент '" + doubleValueToSearch + "' знайдено в масивi за позицією: " + position);
         } else {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' відсутній в масиві.");
+            System.out.println("Елемент '" + doubleValueToSearch + "' відсутній в масиві.");
         }
     }
 
     /**
-     * Визначає найменше та найбільше значення в масиві дати та часу.
+     * Визначає найменше та найбільше значення в масиві дійсного числа.
      */
     void locateMinMaxInArray() {
-        if (dateTimeArray == null || dateTimeArray.length == 0) {
+        if (doubleArray == null || doubleArray.length == 0) {
             System.out.println("Масив є пустим або не ініціалізованим.");
             return;
         }
 
         long timeStart = System.nanoTime();
 
-        double minValue = dateTimeArray[0];
-        double maxValue = dateTimeArray[0];
+        double minValue = doubleArray[0];
+        double maxValue = doubleArray[0];
 
-        for (double currentValue : dateTimeArray) {
+        for (double currentValue : doubleArray) {
             if (currentValue < minValue) {
                 minValue = currentValue;
             }
@@ -128,19 +128,19 @@ public class BasicDataOperationUsingList {
     }
 
     /**
-     * Шукає конкретне значення дати та часу в колекції ArrayList.
+     * Шукає конкретне значення дійсного числа в колекції ArrayList.
      */
     void findInList() {
         long timeStart = System.nanoTime();
 
-        int position = Collections.binarySearch(this.dateTimeList, dateTimeValueToSearch);
+        int position = Collections.binarySearch(this.doubleList, doubleValueToSearch);
 
         PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в List дати i часу");        
 
         if (position >= 0) {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' знайдено в ArrayList за позицією: " + position);
+            System.out.println("Елемент '" + doubleValueToSearch + "' знайдено в ArrayList за позицією: " + position);
         } else {
-            System.out.println("Елемент '" + dateTimeValueToSearch + "' відсутній в ArrayList.");
+            System.out.println("Елемент '" + doubleValueToSearch + "' відсутній в ArrayList.");
         }
     }
 
@@ -148,15 +148,15 @@ public class BasicDataOperationUsingList {
      * Визначає найменше і найбільше значення в колекції ArrayList з датами.
      */
     void locateMinMaxInList() {
-        if (dateTimeList == null || dateTimeList.isEmpty()) {
+        if (doubleList == null || doubleList.isEmpty()) {
             System.out.println("Колекція ArrayList є пустою або не ініціалізованою.");
             return;
         }
 
         long timeStart = System.nanoTime();
 
-        double minValue = Collections.min(dateTimeList);
-        double maxValue = Collections.max(dateTimeList);
+        double minValue = Collections.min(doubleList);
+        double maxValue = Collections.max(doubleList);
 
         PerformanceTracker.displayOperationTime(timeStart, "визначення мiнiмальної i максимальної дати в List");
 
@@ -171,7 +171,7 @@ public class BasicDataOperationUsingList {
     void sortList() {
         long timeStart = System.nanoTime();
 
-        Collections.sort(dateTimeList);
+        Collections.sort(doubleList);
 
         PerformanceTracker.displayOperationTime(timeStart, "упорядкування ArrayList дати i часу");
     }
