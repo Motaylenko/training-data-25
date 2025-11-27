@@ -32,14 +32,14 @@ public class DataFileHandler {
      * Зберігає масив чисел у файл.
      * 
      * @param numbersArray Масив чисел.
-     * @param filePath Шлях до файлу для збереження.
+     * @param filePath     Шлях до файлу для збереження.
      */
     public static void writeArrayToFile(Double[] numbersArray, String filePath) {
         try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(filePath))) {
             String content = Arrays.stream(numbersArray)
                     .map(String::valueOf)
                     .collect(Collectors.joining(System.lineSeparator()));
-           
+
             fileWriter.write(content);
 
         } catch (IOException ioException) {
