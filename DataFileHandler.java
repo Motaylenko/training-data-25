@@ -19,17 +19,15 @@ public class DataFileHandler {
         int currentIndex = 0;
 
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath))) {
-            String currentLine;
-            while ((currentLine = fileReader.readLine()) != null) {
-                // Видаляємо можливі невидимі символи та BOM
-                currentLine = currentLine.trim().replaceAll("^\\uFEFF", "");
-                if (!currentLine.isEmpty()) {
-                    temporaryArray[currentIndex++] = Double.parseDouble(currentLine);
-                }
-            }
-        } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();
+            return fileReader.lines()
+                    .map(currentLine -> currentLine.trim().replaceAll("^\\uFEFF", ""))
+                    .filter(currentLine -> !currentLine.isEmpty())
+                    .map(currentLine -> Double.parseDouble(currentLine, timeFormatter))
+                    .toArray(LocalDateTime[]::new);
+        } catch (IOException ioException) {
+            throw new RuntimeException("Помилка читання даних з файлу: " + filePath, ioException);
         }
+
 
         Double[] resultArray = new Double[currentIndex];
         System.arraycopy(temporaryArray, 0, resultArray, 0, currentIndex);
@@ -45,10 +43,12 @@ public class DataFileHandler {
      */
     public static void writeArrayToFile(Double[] numbersArray, String filePath) {
         try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(filePath))) {
-            for (double value : numbersArray) {
-                fileWriter.write(String.valueOf(value));
-                fileWriter.newLine();
-            }
+            String content = Arrays.stream(dateTimeArray)
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(System.lineSeparator()));
+           
+            fileWriter.write(content);
+
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
