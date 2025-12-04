@@ -4,17 +4,23 @@ import java.util.Arrays;
 import java.util.PriorityQueue;
 
 /**
- * Клас BasicDataOperationUsingQueue реалізує роботу з колекціями типу Queue для числових даних.
+ * Клас BasicDataOperationUsingQueue реалізує роботу з колекціями типу Queue для
+ * числових даних.
  * 
- * <p>Основні функції класу:</p>
+ * <p>
+ * Основні функції класу:
+ * </p>
  * <ul>
- *   <li>{@link #runDataProcessing()} - Запускає комплекс операцій з даними.</li>
- *   <li>{@link #performArraySorting()} - Упорядковує масив чисел.</li>
- *   <li>{@link #findInArray()} - Пошук значення в масиві.</li>
- *   <li>{@link #locateMinMaxInArray()} - Знаходить мінімальне і максимальне значення в масиві.</li>
- *   <li>{@link #findInQueue()} - Пошук значення в черзі.</li>
- *   <li>{@link #locateMinMaxInQueue()} - Знаходить граничні значення в черзі.</li>
- *   <li>{@link #performQueueOperations()} - Виконує операції peek і poll з чергою.</li>
+ * <li>{@link #runDataProcessing()} - Запускає комплекс операцій з даними.</li>
+ * <li>{@link #performArraySorting()} - Упорядковує масив чисел.</li>
+ * <li>{@link #findInArray()} - Пошук значення в масиві.</li>
+ * <li>{@link #locateMinMaxInArray()} - Знаходить мінімальне і максимальне
+ * значення в масиві.</li>
+ * <li>{@link #findInQueue()} - Пошук значення в черзі.</li>
+ * <li>{@link #locateMinMaxInQueue()} - Знаходить граничні значення в
+ * черзі.</li>
+ * <li>{@link #performQueueOperations()} - Виконує операції peek і poll з
+ * чергою.</li>
  * </ul>
  * 
  */
@@ -27,20 +33,20 @@ public class BasicDataOperationUsingQueue {
      * Конструктор, який iнiцiалiзує об'єкт з готовими даними.
      * 
      * @param doubleValueToSearch Значення для пошуку
-     * @param doubleArray Масив числових даних
+     * @param doubleArray         Масив числових даних
      */
     BasicDataOperationUsingQueue(double doubleValueToSearch, Double[] doubleArray) {
         // Перетворюємо рядок в число
         this.doubleValueToSearch = doubleValueToSearch;
         this.doubleArray = doubleArray.clone();
-        
+
         // Ініціалізуємо чергу з масиву double
         this.doubleQueue = new PriorityQueue<>();
         for (double value : doubleArray) {
             this.doubleQueue.add(value);
         }
     }
-    
+
     /**
      * Запускає комплексну обробку даних з використанням черги.
      * 
@@ -84,9 +90,9 @@ public class BasicDataOperationUsingQueue {
     private void findInArray() {
         // відстежуємо час виконання пошуку в масиві
         long timeStart = System.nanoTime();
-        
+
         int position = Arrays.binarySearch(this.doubleArray, doubleValueToSearch);
-        
+
         PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в масивi дійсного числа");
 
         if (position >= 0) {
@@ -133,8 +139,8 @@ public class BasicDataOperationUsingQueue {
         // вимірюємо час пошуку в черзі
         long timeStart = System.nanoTime();
 
-          boolean elementExists = doubleQueue.stream()
-            .anyMatch(dateTime -> dateTime.equals(doubleValueToSearch));
+        boolean elementExists = doubleQueue.stream()
+                .anyMatch(dateTime -> dateTime.equals(doubleValueToSearch));
 
         PerformanceTracker.displayOperationTime(timeStart, "пошук елемента в Queue дійсного числа");
 
@@ -161,12 +167,11 @@ public class BasicDataOperationUsingQueue {
                 .mapToDouble(Double::doubleValue)
                 .min()
                 .orElse(0.0);
-       
+
         double maxValue = doubleQueue.stream()
                 .mapToDouble(Double::doubleValue)
                 .max()
                 .orElse(0.0);
-                
         PerformanceTracker.displayOperationTime(timeStart, "визначення мiнiмальної i максимальної дати в Queue");
 
         System.out.println("Найменше значення в Queue: " + minValue);
