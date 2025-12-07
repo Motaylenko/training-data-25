@@ -2,8 +2,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.LinkedHashMap;
 
 /**
@@ -35,17 +37,8 @@ public class BasicDataOperationUsingMap {
      * Компаратор для сортування Map.Entry за значеннями String.
      * Використовує метод String.compareTo() для порівняння імен власників.
      */
-    static class OwnerValueComparator implements Comparator<Map.Entry<Parrot, String>> {
-        @Override
-        public int compare(Map.Entry<Parrot, String> e1, Map.Entry<Parrot, String> e2) {
-            String v1 = e1.getValue();
-            String v2 = e2.getValue();
-            if (v1 == null && v2 == null) return 0;
-            if (v1 == null) return -1;
-            if (v2 == null) return 1;
-            return v1.compareTo(v2);
-        }
-    }
+    // Comparator for Map.Entry values is created where needed using
+    // Comparator.comparing(Map.Entry::getValue, Comparator.nullsFirst(String::compareTo))
 
     /**
      * Внутрішній клас Parrot для зберігання інформації про домашню тварину.
@@ -259,9 +252,9 @@ public class BasicDataOperationUsingMap {
         System.out.println("\n=== Пари ключ-значення в HashMap ===");
         long timeStart = System.nanoTime();
 
-        for (Map.Entry<Parrot, String> entry : hashtable.entrySet()) {
-            System.out.println("  " + entry.getKey() + " -> " + entry.getValue());
-        }
+        hashtable.entrySet().forEach(entry ->
+            System.out.println("  " + entry.getKey() + " -> " + entry.getValue())
+        );
 
         PerformanceTracker.displayOperationTime(timeStart, "виведення пари ключ-значення в HashMap");
     }
@@ -274,18 +267,14 @@ public class BasicDataOperationUsingMap {
     private void sortHashMap() {
         long timeStart = System.nanoTime();
 
-        // Створюємо список ключів і сортуємо за природним порядком Parrot
-        List<Parrot> sortedKeys = new ArrayList<>(hashtable.keySet());
-        Collections.sort(sortedKeys);
-
-        // Створюємо LinkedHashMap з відсортованими ключами для збереження порядку вставки
-        LinkedHashMap<Parrot, String> sortedMap = new LinkedHashMap<>();
-        for (Parrot key : sortedKeys) {
-            sortedMap.put(key, hashtable.get(key));
-        }
-
-        // Перезаписуємо оригінальну hashtable, використовуючи новий HashMap з порядком з sortedMap
-        hashtable = new HashMap<>(sortedMap);
+       hashtable = hashtable.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        Hashtable::new
+                ));
 
         PerformanceTracker.displayOperationTime(timeStart, "сортування HashMap за ключами (через LinkedHashMap)");
     }
@@ -316,17 +305,13 @@ public class BasicDataOperationUsingMap {
     void findByValueInHashMap() {
         long timeStart = System.nanoTime();
 
-        // Створюємо список Entry та сортуємо за значеннями
-        List<Map.Entry<Parrot, String>> entries = new ArrayList<>(hashtable.entrySet());
-        OwnerValueComparator comparator = new OwnerValueComparator();
-        Collections.sort(entries, comparator);
+        List<Pet> keysToRemove = hashtable.entrySet().stream()
+                .filter(entry -> entry.getValue() != null && entry.getValue().equals(VALUE_TO_SEARCH_AND_DELETE))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
 
-        // Створюємо тимчасовий Entry для пошуку
-        Map.Entry<Parrot, String> searchEntry = new Map.Entry<Parrot, String>() {
-            public Parrot getKey() { return null; }
-            public String getValue() { return VALUE_TO_SEARCH_AND_DELETE; }
-            public String setValue(String value) { return null; }
-        };
+
+        keysToRemove.forEach(hashtable::remove);
 
         int position = Collections.binarySearch(entries, searchEntry, comparator);
 
@@ -376,16 +361,12 @@ public class BasicDataOperationUsingMap {
     void removeByValueFromHashMap() {
         long timeStart = System.nanoTime();
 
-        List<Parrot> keysToRemove = new ArrayList<>();
-        for (Map.Entry<Parrot, String> entry : hashtable.entrySet()) {
-            if (entry.getValue() != null && entry.getValue().equals(VALUE_TO_SEARCH_AND_DELETE)) {
-                keysToRemove.add(entry.getKey());
-            }
-        }
-        
-        for (Parrot key : keysToRemove) {
-            hashtable.remove(key);
-        }
+        List<Pet> keysToRemove = hashtable.entrySet().stream()
+                .filter(entry -> entry.getValue() != null && entry.getValue().equals(VALUE_TO_SEARCH_AND_DELETE))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+       
+        keysToRemove.forEach(hashtable::remove);
 
         PerformanceTracker.displayOperationTime(timeStart, "видалення за значенням з HashMap");
 
@@ -436,7 +417,8 @@ public class BasicDataOperationUsingMap {
 
         // Створюємо список Entry та сортуємо за значеннями
         List<Map.Entry<Parrot, String>> entries = new ArrayList<>(treeMap.entrySet());
-        OwnerValueComparator comparator = new OwnerValueComparator();
+        Comparator<Map.Entry<Parrot, String>> comparator = Comparator.comparing(Map.Entry::getValue,
+            Comparator.nullsFirst(String::compareTo));
         Collections.sort(entries, comparator);
 
         // Створюємо тимчасовий Entry для пошуку
