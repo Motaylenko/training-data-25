@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -267,14 +266,16 @@ public class BasicDataOperationUsingMap {
     private void sortHashMap() {
         long timeStart = System.nanoTime();
 
-       hashtable = hashtable.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey())
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        Map.Entry::getValue,
-                        (e1, e2) -> e1,
-                        Hashtable::new
-                ));
+           java.util.LinkedHashMap<Parrot, String> sortedMap = hashtable.entrySet().stream()
+            .sorted(Map.Entry.comparingByKey())
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (e1, e2) -> e1,
+                java.util.LinkedHashMap::new
+            ));
+
+        hashtable = new HashMap<>(sortedMap);
 
         PerformanceTracker.displayOperationTime(timeStart, "сортування HashMap за ключами (через LinkedHashMap)");
     }
@@ -305,13 +306,18 @@ public class BasicDataOperationUsingMap {
     void findByValueInHashMap() {
         long timeStart = System.nanoTime();
 
-        List<Pet> keysToRemove = hashtable.entrySet().stream()
-                .filter(entry -> entry.getValue() != null && entry.getValue().equals(VALUE_TO_SEARCH_AND_DELETE))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+        // Створюємо список Entry та сортуємо за значеннями (nulls first)
+        List<Map.Entry<Parrot, String>> entries = new ArrayList<>(hashtable.entrySet());
+        Comparator<Map.Entry<Parrot, String>> comparator = Comparator.comparing(Map.Entry::getValue,
+                Comparator.nullsFirst(String::compareTo));
+        Collections.sort(entries, comparator);
 
-
-        keysToRemove.forEach(hashtable::remove);
+        // Тимчасовий Entry для пошуку за значенням
+        Map.Entry<Parrot, String> searchEntry = new Map.Entry<Parrot, String>() {
+            public Parrot getKey() { return null; }
+            public String getValue() { return VALUE_TO_SEARCH_AND_DELETE; }
+            public String setValue(String value) { return null; }
+        };
 
         int position = Collections.binarySearch(entries, searchEntry, comparator);
 
@@ -361,10 +367,10 @@ public class BasicDataOperationUsingMap {
     void removeByValueFromHashMap() {
         long timeStart = System.nanoTime();
 
-        List<Pet> keysToRemove = hashtable.entrySet().stream()
-                .filter(entry -> entry.getValue() != null && entry.getValue().equals(VALUE_TO_SEARCH_AND_DELETE))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+        List<Parrot> keysToRemove = hashtable.entrySet().stream()
+            .filter(entry -> entry.getValue() != null && entry.getValue().equals(VALUE_TO_SEARCH_AND_DELETE))
+            .map(Map.Entry::getKey)
+            .collect(Collectors.toList());
        
         keysToRemove.forEach(hashtable::remove);
 
